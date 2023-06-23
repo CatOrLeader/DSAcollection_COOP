@@ -1,12 +1,10 @@
 package datastructures.stacks;
 
-import datastructures.stacks.Stack;
-
 /**
  * Stack through linked list implementation.
  * @param <T> - data type which will be stored in the stack.
  */
-public class StackLL<T> implements Stack<T> {
+public class StackLL<T> implements StackADT<T> {
     private int size;
     private ObjectRefPair<T, ObjectRefPair> stackHead;
 
