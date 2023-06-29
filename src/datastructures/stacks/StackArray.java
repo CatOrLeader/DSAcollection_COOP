@@ -6,11 +6,11 @@ import java.util.ArrayList;
  * Stack through array based implementation.
  * @param <T> - data type which will be stored in the stack.
  */
-public class StackSLL<T> implements StackADT<T> {
+public class StackArray<T> implements StackADT<T> {
     private int size;
     private final ArrayList<T> stack;
 
-    public StackSLL() {
+    public StackArray() {
         size = 0;
         stack = new ArrayList<>();
     }
