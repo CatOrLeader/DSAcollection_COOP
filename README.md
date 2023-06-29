@@ -11,4 +11,4 @@ Already refactored:
 
 ### Data Structures
 
--
+- Stack (all types)
