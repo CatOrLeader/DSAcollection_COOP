@@ -7,7 +7,7 @@ Already refactored:
 
 ### Algorithms
 
-- Counting Sort
+- All the basic sortings
 
 ### Data Structures
 
