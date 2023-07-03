@@ -1,13 +1,13 @@
 package algorithms.sortings;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
-public class CountingSort {
+public class CountingSort implements ISort {
 
     private int[] array;
 
-    public void inputArray() {
+    @Override
+    public void inputArrayFromConsole() {
         Scanner in = new Scanner(System.in);
         System.out.print("Input an array split by spaces: ");
         String[] arr = in.nextLine().split(" ");
@@ -17,9 +17,21 @@ public class CountingSort {
         }
     }
 
+    @Override
     public void printArray() {
         System.out.print("Your array:");
-        Arrays.stream(array).forEach(x-> System.out.print(" " + x));
+
+        for (int j : array) {
+            System.out.print(" " + j);
+        }
+    }
+
+    @Override
+    public void inputArray(int[] array) {
+        this.array = new int[array.length];
+        for (int i = 0; i < array.length; i++){
+            this.array[i] = array[i];
+        }
     }
 
     public void sort() {

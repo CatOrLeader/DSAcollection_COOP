@@ -1,8 +1,9 @@
 package algorithms.sortings;
 
+import java.util.Random;
 import java.util.Scanner;
 
-public class QuickSort implements ISort {
+public class BogoSort implements ISort {
 
     private int[] array;
 
@@ -19,7 +20,7 @@ public class QuickSort implements ISort {
     @Override
     public void inputArray(int[] array) {
         this.array = new int[array.length];
-        for (int i = 0; i < array.length; i++){
+        for (int i = 0; i < array.length; i++) {
             this.array[i] = array[i];
         }
     }
@@ -29,6 +30,7 @@ public class QuickSort implements ISort {
         for (int j : array) {
             System.out.print(" " + j);
         }
+        System.out.println();
     }
 
     public void sort() {
@@ -36,28 +38,27 @@ public class QuickSort implements ISort {
             System.out.println("Array is null");
             return;
         }
-        quickSort(0, array.length - 1);
-    }
 
-    private void quickSort(int low, int high) {
-        if (low < high) {
-            int partitionIndex = partition(low, high);
-            quickSort(low, partitionIndex - 1);
-            quickSort(partitionIndex + 1, high);
+        while (!isSorted(array)) {
+            shuffleArray(array);
         }
     }
 
-    private int partition(int low, int high) {
-        int pivot = array[high];
-        int i = (low - 1);
-        for (int j = low; j < high; j++) {
-            if (array[j] <= pivot) {
-                i++;
-                swap(i, j);
+    private boolean isSorted(int[] array) {
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] < array[i - 1]) {
+                return false;
             }
         }
-        swap(i + 1, high);
-        return i + 1;
+        return true;
+    }
+
+    private void shuffleArray(int[] array) {
+        Random random = new Random();
+        for (int i = 0; i < array.length; i++) {
+            int j = random.nextInt(i + 1);
+            swap(i, j);
+        }
     }
 
     private void swap(int i, int j) {

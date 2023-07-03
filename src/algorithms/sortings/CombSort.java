@@ -2,7 +2,7 @@ package algorithms.sortings;
 
 import java.util.Scanner;
 
-public class QuickSort implements ISort {
+public class CombSort implements ISort {
 
     private int[] array;
 
@@ -19,7 +19,7 @@ public class QuickSort implements ISort {
     @Override
     public void inputArray(int[] array) {
         this.array = new int[array.length];
-        for (int i = 0; i < array.length; i++){
+        for (int i = 0; i < array.length; i++) {
             this.array[i] = array[i];
         }
     }
@@ -29,6 +29,7 @@ public class QuickSort implements ISort {
         for (int j : array) {
             System.out.print(" " + j);
         }
+        System.out.println();
     }
 
     public void sort() {
@@ -36,28 +37,27 @@ public class QuickSort implements ISort {
             System.out.println("Array is null");
             return;
         }
-        quickSort(0, array.length - 1);
-    }
 
-    private void quickSort(int low, int high) {
-        if (low < high) {
-            int partitionIndex = partition(low, high);
-            quickSort(low, partitionIndex - 1);
-            quickSort(partitionIndex + 1, high);
-        }
-    }
+        int n = array.length;
+        int gap = n;
+        boolean swapped = true;
 
-    private int partition(int low, int high) {
-        int pivot = array[high];
-        int i = (low - 1);
-        for (int j = low; j < high; j++) {
-            if (array[j] <= pivot) {
-                i++;
-                swap(i, j);
+        while (gap > 1 || swapped) {
+            gap = nextGap(gap);
+            swapped = false;
+
+            for (int i = 0; i < n - gap; i++) {
+                if (array[i] > array[i + gap]) {
+                    swap(i, i + gap);
+                    swapped = true;
+                }
             }
         }
-        swap(i + 1, high);
-        return i + 1;
+    }
+
+    private int nextGap(int gap) {
+        gap = (gap * 10) / 13;
+        return Math.max(gap, 1);
     }
 
     private void swap(int i, int j) {

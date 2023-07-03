@@ -2,7 +2,7 @@ package algorithms.sortings;
 
 import java.util.Scanner;
 
-public class QuickSort implements ISort {
+public class ShellSort implements ISort {
 
     private int[] array;
 
@@ -19,7 +19,7 @@ public class QuickSort implements ISort {
     @Override
     public void inputArray(int[] array) {
         this.array = new int[array.length];
-        for (int i = 0; i < array.length; i++){
+        for (int i = 0; i < array.length; i++) {
             this.array[i] = array[i];
         }
     }
@@ -29,6 +29,7 @@ public class QuickSort implements ISort {
         for (int j : array) {
             System.out.print(" " + j);
         }
+        System.out.println();
     }
 
     public void sort() {
@@ -36,33 +37,17 @@ public class QuickSort implements ISort {
             System.out.println("Array is null");
             return;
         }
-        quickSort(0, array.length - 1);
-    }
+        int n = array.length;
 
-    private void quickSort(int low, int high) {
-        if (low < high) {
-            int partitionIndex = partition(low, high);
-            quickSort(low, partitionIndex - 1);
-            quickSort(partitionIndex + 1, high);
-        }
-    }
-
-    private int partition(int low, int high) {
-        int pivot = array[high];
-        int i = (low - 1);
-        for (int j = low; j < high; j++) {
-            if (array[j] <= pivot) {
-                i++;
-                swap(i, j);
+        for (int gap = n / 2; gap > 0; gap /= 2) {
+            for (int i = gap; i < n; i++) {
+                int temp = array[i];
+                int j;
+                for (j = i; j >= gap && array[j - gap] > temp; j -= gap) {
+                    array[j] = array[j - gap];
+                }
+                array[j] = temp;
             }
         }
-        swap(i + 1, high);
-        return i + 1;
-    }
-
-    private void swap(int i, int j) {
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
     }
 }

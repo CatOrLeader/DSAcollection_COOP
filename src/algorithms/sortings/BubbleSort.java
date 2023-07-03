@@ -2,7 +2,7 @@ package algorithms.sortings;
 
 import java.util.Scanner;
 
-public class QuickSort implements ISort {
+public class BubbleSort implements ISort {
 
     private int[] array;
 
@@ -36,28 +36,14 @@ public class QuickSort implements ISort {
             System.out.println("Array is null");
             return;
         }
-        quickSort(0, array.length - 1);
-    }
-
-    private void quickSort(int low, int high) {
-        if (low < high) {
-            int partitionIndex = partition(low, high);
-            quickSort(low, partitionIndex - 1);
-            quickSort(partitionIndex + 1, high);
-        }
-    }
-
-    private int partition(int low, int high) {
-        int pivot = array[high];
-        int i = (low - 1);
-        for (int j = low; j < high; j++) {
-            if (array[j] <= pivot) {
-                i++;
-                swap(i, j);
+        int n = array.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (array[j] > array[j + 1]) {
+                    swap(j, j + 1);
+                }
             }
         }
-        swap(i + 1, high);
-        return i + 1;
     }
 
     private void swap(int i, int j) {
