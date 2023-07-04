@@ -31,7 +31,7 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
 
     public HashMapDH() {
         size = maxHashtableSize;
-        closestLowerPrime = getClosestLowerPrime(size);
+        closestLowerPrime = closestLowerPrime(size);
         hashMap = new KeyValuePair[size];
     }
 
@@ -66,8 +66,8 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
      */
     @Override
     public V find(K key) {
-        int startingIndex = getStartIndexWithHashing(key);
-        int hashStep = getSpecifiedHashStep(key);
+        int startingIndex = startIndexWithHashing(key);
+        int hashStep = specifiedHashStep(key);
 
         for (int i = 0; i < size(); i++) {
             int currentIndex = (startingIndex + i * hashStep) % size();
@@ -98,8 +98,8 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
      */
     @Override
     public void put(K key, V value) {
-        int startingIndex = getStartIndexWithHashing(key);
-        int hashStep = getSpecifiedHashStep(key);
+        int startingIndex = startIndexWithHashing(key);
+        int hashStep = specifiedHashStep(key);
         boolean noEmptySlots = true;
 
         for (int i = 0; i < size(); i++) {
@@ -120,8 +120,8 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
 
     @Override
     public void remove(K key) {
-        int startingIndex = getStartIndexWithHashing(key);
-        int hashStep = getSpecifiedHashStep(key);
+        int startingIndex = startIndexWithHashing(key);
+        int hashStep = specifiedHashStep(key);
 
         for (int i = 0; i < size(); i++) {
             int currentIndex = (startingIndex + i * hashStep) % size();
@@ -186,7 +186,7 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
      */
     private void rehash() {
         size *= rehashingSize;
-        closestLowerPrime = getClosestLowerPrime(size);
+        closestLowerPrime = closestLowerPrime(size);
 
         KeyValuePair<K, V>[] oldHashMap = hashMap.clone();
         this.hashMap = new KeyValuePair[size];
@@ -204,7 +204,7 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
      * @param num - number
      * @return int - closest prime less than num.
      */
-    private int getClosestLowerPrime(int num) {
+    private int closestLowerPrime(int num) {
         num--;
         while (!isPrime(num)) {
             num--;
@@ -235,7 +235,7 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
      * @param key - object which will be treated as a key in HashMap.
      * @return int initial index.
      */
-    private int getStartIndexWithHashing(K key) {
+    private int startIndexWithHashing(K key) {
         return (key.hashCode() & 0xfffffff) % size;
     }
 
@@ -246,7 +246,7 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
      * @param key - object which will be treated as a key in HashMap.
      * @return int hashStep.
      */
-    private int getSpecifiedHashStep(K key) {
+    private int specifiedHashStep(K key) {
         return closestLowerPrime - ((key.hashCode() & 0xfffffff) % closestLowerPrime);
     }
 }

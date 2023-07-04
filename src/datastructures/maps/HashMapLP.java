@@ -49,7 +49,7 @@ public class HashMapLP<K, V> implements MapADT<K, V> {
      */
     @Override
     public V find(K key) {
-        int index = getHashIndex(key);
+        int index = hashIndex(key);
 
         for (int i = 0; i < size(); i++) {
             int currentIndex = (index + i) % size();
@@ -76,7 +76,7 @@ public class HashMapLP<K, V> implements MapADT<K, V> {
      */
     @Override
     public void put(K key, V value) {
-        int index = getHashIndex(key);
+        int index = hashIndex(key);
 
         for (int i = 0; i < size(); i++) {
             int currentIndex = (index + i) % size();
@@ -95,7 +95,7 @@ public class HashMapLP<K, V> implements MapADT<K, V> {
      */
     @Override
     public void remove(K key) {
-        int index = getHashIndex(key);
+        int index = hashIndex(key);
 
         for (int i = 0; i < size(); i++) {
             int currentIndex = (index + i) % size();
@@ -171,7 +171,7 @@ public class HashMapLP<K, V> implements MapADT<K, V> {
      * @param key - object which will be treated as a key in the HashMap.
      * @return int - hash index for the key.
      */
-    private int getHashIndex(K key) {
+    private int hashIndex(K key) {
         return key.hashCode() % size();
     }
 }
