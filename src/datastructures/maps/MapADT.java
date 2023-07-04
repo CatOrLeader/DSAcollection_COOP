@@ -10,8 +10,7 @@ interface MapADT<K, V> {
     int size();
 
     boolean isEmpty();
-
-    V get(K key);
+    V find(K key);
 
     void put(K key, V value);
 

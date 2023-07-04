@@ -12,3 +12,4 @@ Already refactored:
 ### Data Structures
 
 - Stack (all types)
+- Maps (Separate Chaining, Linear Probing, Double Hashing)

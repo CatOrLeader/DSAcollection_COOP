@@ -3,68 +3,12 @@ package datastructures.maps;
 import java.util.ArrayList;
 
 /**
- * Class which represents the part of the input - date.
- * Form: YYYY-MM-DD
- */
-class Date {
-    String date;
-
-    Date(String dateRec) {
-        this.date = dateRec;
-    }
-
-    @Override
-    public String toString() {
-        return date;
-    }
-}
-
-/**
- * Class which implements Entry<Ids, Cost>.
- * Ids - the array of customers' ids.
- * Cost - integer value of every purchase.
- */
-class IdAndCost {
-    float cost;
-    ArrayList<String> ids = new ArrayList<>();
-
-    IdAndCost(String idRec, String costRec) {
-        this.ids.add(idRec);
-        this.cost = Float.parseFloat(costRec.substring(1));
-    }
-}
-
-/**
- * The Entry<K, V> for further HashMap implementation.
- *
- * @param <K> - object which will be treated as key in HashMap.
- * @param <V> object which will be treated as value in HashMap.
- */
-class KeyValuePair<K, V> {
-    private final K key;
-    private final V value;
-
-    KeyValuePair(K keyReceived, V valueReceived) {
-        this.key = keyReceived;
-        this.value = valueReceived;
-    }
-
-    public K getKey() {
-        return key;
-    }
-
-    public V getValue() {
-        return value;
-    }
-}
-
-/**
  * The main class, which implements the functionality of HashMap through the Open Addressing with Double Hashing.
  *
  * @param <K> - object which will be treated as key in HashMap.
  * @param <V> - object which will be treated as value in HashMap.
  */
-class HashMapDH<K, V> implements MapADT<K, V> {
+public class HashMapDH<K, V> implements MapADT<K, V> {
     /**
      * Minimal prime number for any HashMap.
      * <p>
@@ -73,7 +17,7 @@ class HashMapDH<K, V> implements MapADT<K, V> {
     private final int minPrime = 3;
 
     /**
-     * Factor of rehashing. That means that HashTable size multiply by 4 everytime when HashTable is full.
+     * Factor of rehashing. That means that HashTable size multiply by 4 every time when HashTable is full.
      */
     private final int rehashingSize = 4;
 
@@ -81,11 +25,11 @@ class HashMapDH<K, V> implements MapADT<K, V> {
      * Initial size for HashTable.
      */
     private final int maxHashtableSize = 100;
-    int size;
-    KeyValuePair<K, V>[] hashMap;
+    private int size;
+    private KeyValuePair<K, V>[] hashMap;
     private int closestLowerPrime;
 
-    HashMapDH() {
+    public HashMapDH() {
         size = maxHashtableSize;
         closestLowerPrime = getClosestLowerPrime(size);
         hashMap = new KeyValuePair[size];
@@ -112,16 +56,16 @@ class HashMapDH<K, V> implements MapADT<K, V> {
     }
 
     /**
-     * Get the value from the HashMap according to received key.
+     * Get the value from the HashMap according to the received key.
      * Complexity: average case - O(1 / (1 - loadFactor)).
      *
-     * @param key - object which will be treated as key in HashMap.
-     * @return V obj - object which is value for key in current Hashmap;
+     * @param key - object which will be treated as a key in HashMap.
+     * @return V obj - object which is the value for the key in the current HashMap;
      * <p>
      * Otherwise, if no such key exists in HashMap - null.
      */
     @Override
-    public V get(K key) {
+    public V find(K key) {
         int startingIndex = getStartIndexWithHashing(key);
         int hashStep = getSpecifiedHashStep(key);
 
@@ -132,8 +76,8 @@ class HashMapDH<K, V> implements MapADT<K, V> {
                 return null;
             }
 
-            if (hashMap[currentIndex].getKey().equals(key)) {
-                return hashMap[i].getValue();
+            if (hashMap[currentIndex].key.equals(key)) {
+                return hashMap[currentIndex].value;
             }
         }
 
@@ -141,16 +85,16 @@ class HashMapDH<K, V> implements MapADT<K, V> {
     }
 
     /**
-     * Modified version of insert function for HashMap.
-     * In this program, we treat date of the purchase as a key.
+     * Modified version of the insert function for HashMap.
+     * In this program, we treat the date of the purchase as a key.
      * Hence, if no such date already inserted in HashMap - insert it as first.
-     * Otherwise, if such date exists in HashMap - resubmit the V value for current key.
+     * Otherwise, if such date exists in HashMap - resubmit the V value for the current key.
      * (Sum of costs and adding ID in IDs array).
      * Last option, if HashTable is full --> rehash it.
      * Complexity: average case O(1 / (1 - loadFactor))
      *
-     * @param key   - object which will be treated as key in HashMap.
-     * @param value - object which will be treated as value in HashMap.
+     * @param key   - object which will be treated as a key in HashMap.
+     * @param value - object which will be treated as a value in HashMap.
      */
     @Override
     public void put(K key, V value) {
@@ -166,18 +110,6 @@ class HashMapDH<K, V> implements MapADT<K, V> {
                 hashMap[currentIndex] = new KeyValuePair<>(key, value);
                 break;
             }
-
-            if (hashMap[currentIndex].getKey().equals(key)) {
-                noEmptySlots = false;
-                /*
-                Reassign the value for this date (key) if we received from the input the same date.
-                 */
-                IdAndCost idAndCost = (IdAndCost) hashMap[currentIndex].getValue();
-                idAndCost.cost += ((IdAndCost) value).cost;
-                idAndCost.ids.add(((IdAndCost) value).ids.get(0));
-                hashMap[currentIndex] = new KeyValuePair<>(key, (V) idAndCost);
-                break;
-            }
         }
 
         if (noEmptySlots) {
@@ -188,16 +120,47 @@ class HashMapDH<K, V> implements MapADT<K, V> {
 
     @Override
     public void remove(K key) {
+        int startingIndex = getStartIndexWithHashing(key);
+        int hashStep = getSpecifiedHashStep(key);
+
+        for (int i = 0; i < size(); i++) {
+            int currentIndex = (startingIndex + i * hashStep) % size();
+
+            if (hashMap[currentIndex] == null) {
+                return;
+            }
+
+            if (hashMap[currentIndex].key.equals(key)) {
+                hashMap[currentIndex] = null;
+                return;
+            }
+        }
     }
 
     @Override
     public Iterable<K> keySet() {
-        return null;
+        ArrayList<K> keys = new ArrayList<>();
+
+        for (KeyValuePair<K, V> entry : hashMap) {
+            if (entry != null) {
+                keys.add(entry.key);
+            }
+        }
+
+        return keys;
     }
 
     @Override
     public Iterable<V> values() {
-        return null;
+        ArrayList<V> values = new ArrayList<>();
+
+        for (KeyValuePair<K, V> entry : hashMap) {
+            if (entry != null) {
+                values.add(entry.value);
+            }
+        }
+
+        return values;
     }
 
     /**
@@ -207,19 +170,19 @@ class HashMapDH<K, V> implements MapADT<K, V> {
      */
     @Override
     public Iterable<KeyValuePair<K, V>> entrySet() {
-        ArrayList<KeyValuePair<K, V>> arr = new ArrayList<>();
+        ArrayList<KeyValuePair<K, V>> entries = new ArrayList<>();
 
-        for (int i = 0; i < size(); i++) {
-            if (hashMap[i] != null) {
-                arr.add(hashMap[i]);
+        for (KeyValuePair<K, V> entry : hashMap) {
+            if (entry != null) {
+                entries.add(entry);
             }
         }
 
-        return arr;
+        return entries;
     }
 
     /**
-     * Rehash the table with factor == 4. (Increase the size 4 times).
+     * Rehash the table with a factor of 4. (Increase the size 4 times).
      */
     private void rehash() {
         size *= rehashingSize;
@@ -228,18 +191,18 @@ class HashMapDH<K, V> implements MapADT<K, V> {
         KeyValuePair<K, V>[] oldHashMap = hashMap.clone();
         this.hashMap = new KeyValuePair[size];
 
-        for (int i = 0; i < size / rehashingSize; i++) {
-            if (oldHashMap[i] != null) {
-                put(oldHashMap[i].getKey(), oldHashMap[i].getValue());
+        for (KeyValuePair<K, V> entry : oldHashMap) {
+            if (entry != null) {
+                put(entry.key, entry.value);
             }
         }
     }
 
     /**
-     * Get the closest prime for less than num.
+     * Get the closest prime less than num.
      *
      * @param num - number
-     * @return int - closest prime les than num.
+     * @return int - closest prime less than num.
      */
     private int getClosestLowerPrime(int num) {
         num--;
@@ -254,7 +217,7 @@ class HashMapDH<K, V> implements MapADT<K, V> {
      * Check if the number is prime.
      *
      * @param num - int number.
-     * @return boolean - true if number is prime; Otherwise, false.
+     * @return boolean - true if the number is prime; Otherwise, false.
      */
     private boolean isPrime(int num) {
         for (int i = 2; i < (int) Math.sqrt(num) + 1; i++) {
@@ -269,7 +232,7 @@ class HashMapDH<K, V> implements MapADT<K, V> {
      * Function which implements the function for finding the starting index.
      * Double Hashing: initial index (starting).
      *
-     * @param key - object which will be treated as key in HashMap.
+     * @param key - object which will be treated as a key in HashMap.
      * @return int initial index.
      */
     private int getStartIndexWithHashing(K key) {
@@ -280,7 +243,7 @@ class HashMapDH<K, V> implements MapADT<K, V> {
      * Function which implements the function for finding the hashing step.
      * Double Hashing: hash step.
      *
-     * @param key - object which will be treated as key in HashMap.
+     * @param key - object which will be treated as a key in HashMap.
      * @return int hashStep.
      */
     private int getSpecifiedHashStep(K key) {
