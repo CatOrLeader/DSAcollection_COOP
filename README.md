@@ -13,3 +13,4 @@ Already refactored:
 
 - Stack (all types)
 - Maps (Separate Chaining, Linear Probing, Double Hashing)
+- Graphs (in process)
