@@ -34,7 +34,7 @@ public class HashMapSC<K, V> implements MapADT<K, V> {
                 return myKeyValuePair;
             }
         }
-        return null;
+        return new KeyValuePair<K, V>(null, null);
     }
 
     @Override

@@ -14,3 +14,4 @@ Already refactored:
 - Stack (all types)
 - Maps (Separate Chaining, Linear Probing, Double Hashing)
 - Graphs (all types)
+- Heaps (Binary, Binomial, D, Leftist, Pairing, SKew, Ternary)

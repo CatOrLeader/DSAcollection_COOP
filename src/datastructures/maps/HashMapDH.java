@@ -80,7 +80,6 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
                 return hashMap[currentIndex].value;
             }
         }
-
         return null;
     }
 
