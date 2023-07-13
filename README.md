@@ -13,5 +13,6 @@ Already refactored:
 
 - Stack (all types)
 - Maps (Separate Chaining, Linear Probing, Double Hashing)
+- Based on MapADT DS (Dictionary, LinkedHashMap, SkipList, TreeMap, Trie)
 - Graphs (all types)
 - Heaps (Binary, Binomial, D, Leftist, Pairing, SKew, Ternary)
