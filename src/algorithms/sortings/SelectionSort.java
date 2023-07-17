@@ -1,59 +1,40 @@
 package algorithms.sortings;
 
-import java.util.Scanner;
+import java.util.ArrayList;
 
-public class SelectionSort implements ISort {
-
-    private int[] array;
-
-    public void inputArrayFromConsole() {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Input an array split by spaces: ");
-        String[] arr = in.nextLine().split(" ");
-        array = new int[arr.length];
-        for (int i = 0; i < arr.length; ++i) {
-            array[i] = Integer.parseInt(arr[i]);
-        }
-    }
-
-    @Override
-    public void inputArray(int[] array) {
-        this.array = new int[array.length];
-        for (int i = 0; i < array.length; i++) {
-            this.array[i] = array[i];
-        }
-    }
-
-    public void printArray() {
-        System.out.print("Your array:");
-        for (int j : array) {
-            System.out.print(" " + j);
-        }
-        System.out.println();
-    }
-
-    public void sort() {
-        if (array == null || array.length == 0) {
+public class SelectionSort<T extends Comparable<T>> implements ISort<T> {
+    public void sort(ArrayList<T> array) {
+        if (array == null || array.size() == 0) {
             System.out.println("Array is null");
             return;
         }
-        int n = array.length;
+
+        selectionSort(array);
+    }
+
+    private void selectionSort(ArrayList<T> array) {
+        int n = array.size();
+
         for (int i = 0; i < n - 1; i++) {
             int minIndex = i;
+
+            // Find the index of the minimum element in the unsorted part of the array
             for (int j = i + 1; j < n; j++) {
-                if (array[j] < array[minIndex]) {
+                if (array.get(j).compareTo(array.get(minIndex)) < 0) {
                     minIndex = j;
                 }
             }
+
+            // Swap the minimum element with the first unsorted element
             if (minIndex != i) {
-                swap(i, minIndex);
+                swap(array, i, minIndex);
             }
         }
     }
 
-    private void swap(int i, int j) {
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+    private void swap(ArrayList<T> array, int i, int j) {
+        T temp = array.get(i);
+        array.set(i, array.get(j));
+        array.set(j, temp);
     }
 }

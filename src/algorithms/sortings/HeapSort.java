@@ -1,76 +1,50 @@
 package algorithms.sortings;
 
-import java.util.Scanner;
+import java.util.ArrayList;
 
-public class HeapSort implements ISort {
-
-    private int[] array;
-
-    public void inputArrayFromConsole() {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Input an array split by spaces: ");
-        String[] arr = in.nextLine().split(" ");
-        array = new int[arr.length];
-        for (int i = 0; i < arr.length; ++i) {
-            array[i] = Integer.parseInt(arr[i]);
-        }
-    }
-
-    @Override
-    public void inputArray(int[] array) {
-        this.array = new int[array.length];
-        for (int i = 0; i < array.length; i++) {
-            this.array[i] = array[i];
-        }
-    }
-
-    public void printArray() {
-        System.out.print("Your array:");
-        for (int j : array) {
-            System.out.print(" " + j);
-        }
-        System.out.println();
-    }
-
-    public void sort() {
-        if (array == null || array.length == 0) {
+public class HeapSort<T extends Comparable<T>> implements ISort<T> {
+    public void sort(ArrayList<T> array) {
+        if (array == null || array.size() == 0) {
             System.out.println("Array is null");
             return;
         }
-        int n = array.length;
 
+        int n = array.size();
+
+        // Build the heap (rearrange the array)
         for (int i = n / 2 - 1; i >= 0; i--) {
             heapify(array, n, i);
         }
 
-        for (int i = n - 1; i >= 0; i--) {
-            int temp = array[0];
-            array[0] = array[i];
-            array[i] = temp;
-
+        // Extract elements from the heap one by one
+        for (int i = n - 1; i > 0; i--) {
+            swap(array, 0, i);
             heapify(array, i, 0);
         }
     }
 
-    private void heapify(int[] arr, int n, int rootIndex) {
-        int largest = rootIndex;
-        int left = 2 * rootIndex + 1;
-        int right = 2 * rootIndex + 2;
+    private void heapify(ArrayList<T> array, int n, int i) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
 
-        if (left < n && arr[left] > arr[largest]) {
+        if (left < n && array.get(left).compareTo(array.get(largest)) > 0) {
             largest = left;
         }
 
-        if (right < n && arr[right] > arr[largest]) {
+        if (right < n && array.get(right).compareTo(array.get(largest)) > 0) {
             largest = right;
         }
 
-        if (largest != rootIndex) {
-            int swap = arr[rootIndex];
-            arr[rootIndex] = arr[largest];
-            arr[largest] = swap;
-
-            heapify(arr, n, largest);
+        if (largest != i) {
+            swap(array, i, largest);
+            heapify(array, n, largest);
         }
+    }
+
+    private void swap(ArrayList<T> array, int i, int j) {
+        T temp = array.get(i);
+        array.set(i, array.get(j));
+        array.set(j, temp);
     }
 }

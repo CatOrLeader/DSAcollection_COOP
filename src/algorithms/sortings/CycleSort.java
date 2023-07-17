@@ -1,87 +1,69 @@
 package algorithms.sortings;
 
-import java.util.Scanner;
+import java.util.ArrayList;
 
-public class CycleSort implements ISort {
-
-    private int[] array;
-
-    public void inputArrayFromConsole() {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Input an array split by spaces: ");
-        String[] arr = in.nextLine().split(" ");
-        array = new int[arr.length];
-        for (int i = 0; i < arr.length; ++i) {
-            array[i] = Integer.parseInt(arr[i]);
-        }
-    }
-
-    @Override
-    public void inputArray(int[] array) {
-        this.array = new int[array.length];
-        for (int i = 0; i < array.length; i++) {
-            this.array[i] = array[i];
-        }
-    }
-
-    public void printArray() {
-        System.out.print("Your array:");
-        for (int j : array) {
-            System.out.print(" " + j);
-        }
-        System.out.println();
-    }
-
-    public void sort() {
-        if (array == null || array.length == 0) {
+public class CycleSort<T extends Comparable<T>> implements ISort<T> {
+    public void sort(ArrayList<T> array) {
+        if (array == null || array.size() == 0) {
             System.out.println("Array is null");
             return;
         }
 
-        int n = array.length;
+        int n = array.size();
 
         for (int cycleStart = 0; cycleStart < n - 1; cycleStart++) {
-            int item = array[cycleStart];
-
+            T item = array.get(cycleStart);
             int pos = cycleStart;
+
+            // Find the correct position for the current item
             for (int i = cycleStart + 1; i < n; i++) {
-                if (array[i] < item) {
+                if (array.get(i).compareTo(item) < 0) {
                     pos++;
                 }
             }
 
+            // If the item is already in the correct position, continue to the next cycle
             if (pos == cycleStart) {
                 continue;
             }
 
-            while (item == array[pos]) {
+            // Skip duplicates
+            while (item.compareTo(array.get(pos)) == 0) {
                 pos++;
             }
 
+            // Swap the current item with the item at the correct position
             if (pos != cycleStart) {
-                int temp = item;
-                item = array[pos];
-                array[pos] = temp;
+                swap(array, cycleStart, pos);
             }
 
+            // Perform subsequent swaps to place all the items in their correct positions
             while (pos != cycleStart) {
                 pos = cycleStart;
+
+                // Find the correct position for the current item
                 for (int i = cycleStart + 1; i < n; i++) {
-                    if (array[i] < item) {
+                    if (array.get(i).compareTo(item) < 0) {
                         pos++;
                     }
                 }
 
-                while (item == array[pos]) {
+                // Skip duplicates
+                while (item.compareTo(array.get(pos)) == 0) {
                     pos++;
                 }
 
-                if (item != array[pos]) {
-                    int temp = item;
-                    item = array[pos];
-                    array[pos] = temp;
+                // Swap the current item with the item at the correct position
+                if (item.compareTo(array.get(cycleStart)) != 0) {
+                    swap(array, cycleStart, pos);
                 }
             }
         }
+    }
+
+    private void swap(ArrayList<T> array, int i, int j) {
+        T temp = array.get(i);
+        array.set(i, array.get(j));
+        array.set(j, temp);
     }
 }

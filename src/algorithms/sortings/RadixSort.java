@@ -1,87 +1,78 @@
 package algorithms.sortings;
 
-import java.util.Scanner;
+import java.util.ArrayList;
 
-public class RadixSort implements ISort {
-
-    private int[] array;
-
-    public void inputArrayFromConsole() {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Input an array split by spaces: ");
-        String[] arr = in.nextLine().split(" ");
-        array = new int[arr.length];
-        for (int i = 0; i < arr.length; ++i) {
-            array[i] = Integer.parseInt(arr[i]);
-        }
-    }
-
-    @Override
-    public void inputArray(int[] array) {
-        this.array = new int[array.length];
-        for (int i = 0; i < array.length; i++) {
-            this.array[i] = array[i];
-        }
-    }
-
-    public void printArray() {
-        System.out.print("Your array:");
-        for (int j : array) {
-            System.out.print(" " + j);
-        }
-        System.out.println();
-    }
-
-    public void sort() {
-        if (array == null || array.length == 0) {
+public class RadixSort<T extends Comparable<T>> implements ISort<T> {
+    public void sort(ArrayList<T> array) {
+        if (array == null || array.size() == 0) {
             System.out.println("Array is null");
             return;
         }
-        int max = calculateMaxValue();
 
-        // Perform counting sort for every digit
-        for (int exp = 1; max / exp > 0; exp *= 10) {
-            countingSort(exp);
+        radixSort(array);
+    }
+
+    private void radixSort(ArrayList<T> array) {
+        // Find the maximum value in the array
+        T max = getMaxValue(array);
+
+        // Perform counting sort for each digit
+        for (int exp = 1; ; exp *= 10) {
+            ArrayList<T> sortedArray = countingSort(array, exp);
+            if (sortedArray.equals(array)) {
+                break;
+            }
+            array = sortedArray;
         }
     }
 
-    private int calculateMaxValue() {
-        int max = array[0];
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] > max) {
-                max = array[i];
+    private ArrayList<T> countingSort(ArrayList<T> array, int exp) {
+        int n = array.size();
+
+        // Initialize count array
+        int[] count = new int[10];
+        for (int i = 0; i < 10; i++) {
+            count[i] = 0;
+        }
+
+        // Store count of occurrences in count array
+        for (int i = 0; i < n; i++) {
+            T item = array.get(i);
+            int digit = getDigit(item, exp);
+            count[digit]++;
+        }
+
+        // Modify count array to store actual position
+        for (int i = 1; i < 10; i++) {
+            count[i] += count[i - 1];
+        }
+
+        // Build the output array
+        ArrayList<T> output = new ArrayList<>(n);
+        for (int i = n - 1; i >= 0; i--) {
+            T item = array.get(i);
+            int digit = getDigit(item, exp);
+            int index = count[digit] - 1;
+            output.set(index, item);
+            count[digit]--;
+        }
+
+        return output;
+    }
+
+    private T getMaxValue(ArrayList<T> array) {
+        T max = array.get(0);
+        for (T item : array) {
+            if (item.compareTo(max) > 0) {
+                max = item;
             }
         }
         return max;
     }
 
-    private void countingSort(int exp) {
-        int n = array.length;
-        int[] output = new int[n];
-        int[] count = new int[10];
-
-        for (int i = 0; i < 10; i++) {
-            count[i] = 0;
-        }
-
-        for (int j : array) {
-            int digit = (j / exp) % 10;
-            count[digit]++;
-        }
-
-        for (int i = 1; i < 10; i++) {
-            count[i] += count[i - 1];
-        }
-
-        for (int i = n - 1; i >= 0; i--) {
-            int digit = (array[i] / exp) % 10;
-            output[count[digit] - 1] = array[i];
-            count[digit]--;
-        }
-
-        for (int i = 0; i < n; i++) {
-            array[i] = output[i];
-        }
+    private int getDigit(T item, int exp) {
+        int value = item.hashCode();
+        return (value / exp) % 10;
     }
 }
 

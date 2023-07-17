@@ -4,7 +4,7 @@ package datastructures.stacks;
  * Stack through doubly linked list implementation.
  * @param <T> - data type which will be stored in the stack.
  */
-public class StackDLL<T> implements StackADT<T> {
+public class StackDLL<T> implements IStackADT<T> {
     private int size;
     private ObjRefPair stackHead;
 

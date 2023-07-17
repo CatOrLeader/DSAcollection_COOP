@@ -2,11 +2,10 @@ package algorithms.sortings;
 
 import java.util.Scanner;
 
-public class CountingSort implements ISort {
+public class CountingSort {
 
     private int[] array;
 
-    @Override
     public void inputArrayFromConsole() {
         Scanner in = new Scanner(System.in);
         System.out.print("Input an array split by spaces: ");
@@ -17,7 +16,6 @@ public class CountingSort implements ISort {
         }
     }
 
-    @Override
     public void printArray() {
         System.out.print("Your array:");
 
@@ -26,7 +24,6 @@ public class CountingSort implements ISort {
         }
     }
 
-    @Override
     public void inputArray(int[] array) {
         this.array = new int[array.length];
         for (int i = 0; i < array.length; i++){
@@ -60,4 +57,3 @@ public class CountingSort implements ISort {
         System.arraycopy(sortedArray, 0, array, 0, array.length);
     }
 }
-

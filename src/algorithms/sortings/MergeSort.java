@@ -1,90 +1,70 @@
 package algorithms.sortings;
 
-import java.util.Scanner;
+import java.util.ArrayList;
 
-public class MergeSort implements ISort {
-
-    private int[] array;
-
-    public void inputArrayFromConsole() {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Input an array split by spaces: ");
-        String[] arr = in.nextLine().split(" ");
-        array = new int[arr.length];
-        for (int i = 0; i < arr.length; ++i) {
-            array[i] = Integer.parseInt(arr[i]);
-        }
-    }
-
-    @Override
-    public void inputArray(int[] array) {
-        this.array = new int[array.length];
-        for (int i = 0; i < array.length; i++) {
-            this.array[i] = array[i];
-        }
-    }
-
-    public void printArray() {
-        System.out.print("Your array:");
-        for (int j : array) {
-            System.out.print(" " + j);
-        }
-        System.out.println();
-    }
-
-    public void sort() {
-        if (array == null || array.length == 0) {
+public class MergeSort<T extends Comparable<T>> implements ISort<T> {
+    public void sort(ArrayList<T> array) {
+        if (array == null || array.size() == 0) {
             System.out.println("Array is null");
             return;
         }
-        mergeSort(array, 0, array.length - 1);
+
+        mergeSort(array, 0, array.size() - 1);
     }
 
-    private void mergeSort(int[] arr, int left, int right) {
+    private void mergeSort(ArrayList<T> array, int left, int right) {
         if (left < right) {
-            int mid = left + (right - left) / 2;
-            mergeSort(arr, left, mid);
-            mergeSort(arr, mid + 1, right);
-            merge(arr, left, mid, right);
+            int mid = (left + right) / 2;
+
+            // Sort the left and right halves recursively
+            mergeSort(array, left, mid);
+            mergeSort(array, mid + 1, right);
+
+            // Merge the sorted halves
+            merge(array, left, mid, right);
         }
     }
 
-    private void merge(int[] arr, int left, int mid, int right) {
+    private void merge(ArrayList<T> array, int left, int mid, int right) {
         int n1 = mid - left + 1;
         int n2 = right - mid;
 
-        int[] leftArr = new int[n1];
-        int[] rightArr = new int[n2];
+        // Create temporary arrays for the left and right halves
+        ArrayList<T> leftArray = new ArrayList<>(n1);
+        ArrayList<T> rightArray = new ArrayList<>(n2);
 
-        for (int i = 0; i < n1; ++i) {
-            leftArr[i] = arr[left + i];
+        // Copy the elements into the temporary arrays
+        for (int i = 0; i < n1; i++) {
+            leftArray.add(array.get(left + i));
         }
-        for (int j = 0; j < n2; ++j) {
-            rightArr[j] = arr[mid + 1 + j];
+        for (int j = 0; j < n2; j++) {
+            rightArray.add(array.get(mid + 1 + j));
         }
 
-        int i = 0, j = 0;
-        int k = left;
+        // Merge the temporary arrays back into the original array
+        int i = 0, j = 0, k = left;
 
         while (i < n1 && j < n2) {
-            if (leftArr[i] <= rightArr[j]) {
-                arr[k] = leftArr[i];
+            if (leftArray.get(i).compareTo(rightArray.get(j)) <= 0) {
+                array.set(k, leftArray.get(i));
                 i++;
             } else {
-                arr[k] = rightArr[j];
+                array.set(k, rightArray.get(j));
                 j++;
             }
             k++;
         }
 
+        // Copy the remaining elements from the left array, if any
         while (i < n1) {
-            arr[k] = leftArr[i];
+            array.set(k, leftArray.get(i));
             i++;
             k++;
         }
 
+        // Copy the remaining elements from the right array, if any
         while (j < n2) {
-            arr[k] = rightArr[j];
+            array.set(k, rightArray.get(j));
             j++;
             k++;
         }

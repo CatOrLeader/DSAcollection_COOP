@@ -1,79 +1,44 @@
 package algorithms.sortings;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ShakerSort implements ISort {
-
-    private int[] array;
-
-    public void inputArrayFromConsole() {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Input an array split by spaces: ");
-        String[] arr = in.nextLine().split(" ");
-        array = new int[arr.length];
-        for (int i = 0; i < arr.length; ++i) {
-            array[i] = Integer.parseInt(arr[i]);
-        }
-    }
-
-    @Override
-    public void inputArray(int[] array) {
-        this.array = new int[array.length];
-        for (int i = 0; i < array.length; i++) {
-            this.array[i] = array[i];
-        }
-    }
-
-    public void printArray() {
-        System.out.print("Your array:");
-        for (int j : array) {
-            System.out.print(" " + j);
-        }
-        System.out.println();
-    }
-
-    public void sort() {
-        if (array == null || array.length == 0) {
+public class ShakerSort<T extends Comparable<T>> implements ISort<T> {
+    public void sort(ArrayList<T> array) {
+        if (array == null || array.size() == 0) {
             System.out.println("Array is null");
             return;
         }
+
+        shakerSort(array);
+    }
+
+    private void shakerSort(ArrayList<T> array) {
         int left = 0;
-        int right = array.length - 1;
-        boolean swapped;
+        int right = array.size() - 1;
 
         while (left <= right) {
-            swapped = false;
-
+            // Move the largest element to the rightmost position
             for (int i = left; i < right; i++) {
-                if (array[i] > array[i + 1]) {
-                    swap(i, i + 1);
-                    swapped = true;
+                if (array.get(i).compareTo(array.get(i + 1)) > 0) {
+                    swap(array, i, i + 1);
                 }
             }
             right--;
 
-            if (!swapped) {
-                break;
-            }
-
-            swapped = false;
+            // Move the smallest element to the leftmost position
             for (int i = right; i > left; i--) {
-                if (array[i] < array[i - 1]) {
-                    swap(i, i - 1);
-                    swapped = true;
+                if (array.get(i).compareTo(array.get(i - 1)) < 0) {
+                    swap(array, i, i - 1);
                 }
             }
             left++;
-
-            if (!swapped) {
-                break;
-            }
         }
     }
 
-    private void swap(int i, int j) {
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+    private void swap(ArrayList<T> array, int i, int j) {
+        T temp = array.get(i);
+        array.set(i, array.get(j));
+        array.set(j, temp);
     }
 }

@@ -1,8 +1,7 @@
 package algorithms.sortings;
 
-public interface ISort {
-    void sort();
-    void inputArrayFromConsole();
-    void printArray();
-    void inputArray(int[] array);
+import java.util.ArrayList;
+
+public interface ISort<T extends Comparable<T>> {
+    void sort(ArrayList<T> array);
 }
