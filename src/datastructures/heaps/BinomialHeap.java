@@ -1,5 +1,7 @@
 package datastructures.heaps;
 
+import datastructures.arrays.IArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,9 @@ public class BinomialHeap<T extends Comparable<T>> implements Heap<T> {
 
     public BinomialHeap() {
         trees = new ArrayList<>();
+    }
+    public BinomialHeap(IArray array) {
+        trees = (ArrayList<BinomialTree<T>>) array;
     }
 
     public void insert(T element) {

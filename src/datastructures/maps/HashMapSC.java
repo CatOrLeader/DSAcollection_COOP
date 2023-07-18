@@ -34,7 +34,7 @@ public class HashMapSC<K, V> implements MapADT<K, V> {
                 return myKeyValuePair;
             }
         }
-        return new KeyValuePair<K, V>(null, null);
+        return new KeyValuePair<>(null, null);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class HashMapSC<K, V> implements MapADT<K, V> {
     @Override
     public V find(K key) {
         KeyValuePair<K, V> entry = entry(key);
-        if (entry != null) {
+        if (entry.key != null) {
             return entry.value;
         }
         return null;
@@ -59,7 +59,7 @@ public class HashMapSC<K, V> implements MapADT<K, V> {
     @Override
     public void put(K key, V value) {
         KeyValuePair<K, V> entry = entry(key);
-        if (entry != null) {
+        if (entry.key != null) {
             entry.value = value;
         } else {
             int hash = key.hashCode() % this.capacity;

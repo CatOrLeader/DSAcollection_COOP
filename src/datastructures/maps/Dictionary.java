@@ -1,12 +1,13 @@
 package datastructures.maps;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Dictionary<K, V> implements MapADT<K, V> {
-    private HashMap<K, V> map;
+    private HashMapSC<K, V> map;
 
     public Dictionary() {
-        map = new HashMap<>();
+        map = new HashMapSC<>();
     }
 
     @Override
@@ -21,7 +22,8 @@ public class Dictionary<K, V> implements MapADT<K, V> {
 
     @Override
     public V find(K key) {
-        return map.get(key);
+        System.out.println();
+        return map.find(key);
     }
 
     @Override
@@ -47,8 +49,8 @@ public class Dictionary<K, V> implements MapADT<K, V> {
     @Override
     public Iterable<KeyValuePair<K, V>> entrySet() {
         List<KeyValuePair<K, V>> entryList = new ArrayList<>();
-        for (Map.Entry<K, V> entry : map.entrySet()) {
-            entryList.add(new KeyValuePair<>(entry.getKey(), entry.getValue()));
+        for (KeyValuePair<K, V> entry : map.entrySet()) {
+            entryList.add(new KeyValuePair<>(entry.key, entry.value));
         }
         return entryList;
     }
