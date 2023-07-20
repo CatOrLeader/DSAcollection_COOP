@@ -134,4 +134,12 @@ public class HashMapSC<K, V> implements MapADT<K, V> {
         capacity = newCapacity;
         hashTable = newHashTable;
     }
+
+    @Override
+    public void print() {
+        System.out.println("Dictionary:");
+        for (KeyValuePair<K, V> pair: entrySet()) {
+            System.out.println(pair.key + " : " + pair.value);
+        }
+    }
 }

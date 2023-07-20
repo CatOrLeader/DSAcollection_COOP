@@ -229,5 +229,13 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
             inorderEntryTraversal(node.right, entries);
         }
     }
+
+    @Override
+    public void print() {
+        System.out.println("Dictionary:");
+        for (KeyValuePair<K, V> pair: entrySet()) {
+            System.out.println(pair.key + " : " + pair.value);
+        }
+    }
 }
 

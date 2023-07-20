@@ -136,4 +136,12 @@ public class SkipList<K extends Comparable<K>, V> implements MapADT<K, V> {
         }
         return level;
     }
+
+    @Override
+    public void print() {
+        System.out.println("Dictionary:");
+        for (KeyValuePair<K, V> pair: entrySet()) {
+            System.out.println(pair.key + " : " + pair.value);
+        }
+    }
 }

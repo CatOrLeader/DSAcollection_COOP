@@ -1,7 +1,5 @@
 package datastructures.heaps;
 
-import datastructures.arrays.IArray;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,14 +13,6 @@ public class DHeap<T extends Comparable<T>> implements Heap<T> {
             throw new IllegalArgumentException("d must be greater than 1.");
         }
         this.heap = new ArrayList<>();
-        this.d = d;
-    }
-
-    public DHeap(int d, IArray array) {
-        if (d <= 1) {
-            throw new IllegalArgumentException("d must be greater than 1.");
-        }
-        this.heap = (List<T>) array;
         this.d = d;
     }
 

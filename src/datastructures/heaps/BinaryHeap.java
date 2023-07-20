@@ -1,8 +1,5 @@
 package datastructures.heaps;
 
-import datastructures.arrays.CharArray;
-import datastructures.arrays.IArray;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +9,6 @@ public class BinaryHeap<T extends Comparable<T>> implements Heap<T> {
 
     public BinaryHeap() {
         heap = new ArrayList<>();
-    }
-    public BinaryHeap(IArray array) {
-        heap = (List<T>) array;
     }
 
     public void insert(T element) {
@@ -52,6 +46,10 @@ public class BinaryHeap<T extends Comparable<T>> implements Heap<T> {
 
     public void clear() {
         heap.clear();
+    }
+
+    private void printElement(T element) {
+        System.out.print(element + " ");
     }
 
     private void heapifyUp(int index) {

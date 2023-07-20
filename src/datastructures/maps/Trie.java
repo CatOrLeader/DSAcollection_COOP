@@ -118,4 +118,12 @@ public class Trie implements MapADT<String, Integer> {
             collectEntries(entry.getValue(), prefix + entry.getKey(), entries);
         }
     }
+
+    @Override
+    public void print() {
+        System.out.println("Dictionary:");
+        for (KeyValuePair<String, Integer> pair: entrySet()) {
+            System.out.println(pair.key + " : " + pair.value);
+        }
+    }
 }

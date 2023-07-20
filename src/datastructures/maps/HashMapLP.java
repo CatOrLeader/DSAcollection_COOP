@@ -174,4 +174,12 @@ public class HashMapLP<K, V> implements MapADT<K, V> {
     private int hashIndex(K key) {
         return key.hashCode() % size();
     }
+
+    @Override
+    public void print() {
+        System.out.println("Dictionary:");
+        for (KeyValuePair<K, V> pair: entrySet()) {
+            System.out.println(pair.key + " : " + pair.value);
+        }
+    }
 }
