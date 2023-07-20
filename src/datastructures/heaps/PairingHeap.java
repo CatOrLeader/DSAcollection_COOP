@@ -1,5 +1,7 @@
 package datastructures.heaps;
 
+import datastructures.arrays.IArray;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -23,6 +25,14 @@ public class PairingHeap<T extends Comparable<T>> implements Heap<T> {
     public PairingHeap() {
         this.root = null;
         this.size = 0;
+    }
+
+    public PairingHeap(IArray<T> array) {
+        this.root = null;
+        this.size = 0;
+        for (T i: array) {
+            insert(i);
+        }
     }
 
     public void insert(T element) {

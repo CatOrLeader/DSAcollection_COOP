@@ -1,5 +1,7 @@
 package datastructures.heaps;
 
+import datastructures.arrays.IArray;
+
 public class LeftistHeap<T extends Comparable<T>> implements Heap<T> {
 
     private Node root;
@@ -22,6 +24,14 @@ public class LeftistHeap<T extends Comparable<T>> implements Heap<T> {
     public LeftistHeap() {
         this.root = null;
         this.size = 0;
+    }
+
+    public LeftistHeap(IArray<T> array) {
+        this.root = null;
+        this.size = 0;
+        for (T i: array) {
+            insert(i);
+        }
     }
 
     public void insert(T element) {

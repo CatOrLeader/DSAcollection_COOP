@@ -1,5 +1,7 @@
 package datastructures.heaps;
 
+import datastructures.arrays.IArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,13 @@ public class TernaryHeap<T extends Comparable<T>> implements Heap<T> {
 
     public TernaryHeap() {
         heap = new ArrayList<>();
+    }
+
+    public TernaryHeap(IArray<T> array) {
+        heap = new ArrayList<>();
+        for (T i: array) {
+            insert(i);
+        }
     }
 
     public void insert(T element) {

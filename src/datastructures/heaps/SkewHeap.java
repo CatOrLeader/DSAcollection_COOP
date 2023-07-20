@@ -1,5 +1,7 @@
 package datastructures.heaps;
 
+import datastructures.arrays.IArray;
+
 public class SkewHeap<T extends Comparable<T>> implements Heap<T> {
 
     private Node root;
@@ -20,6 +22,14 @@ public class SkewHeap<T extends Comparable<T>> implements Heap<T> {
     public SkewHeap() {
         this.root = null;
         this.size = 0;
+    }
+
+    public SkewHeap(IArray<T> array) {
+        this.root = null;
+        this.size = 0;
+        for (T i: array) {
+            insert(i);
+        }
     }
 
     public void insert(T element) {

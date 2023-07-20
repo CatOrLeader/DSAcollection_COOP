@@ -2,7 +2,7 @@ package datastructures.arrays;
 
 import algorithms.sortings.ISort;
 
-public interface IArray<T> {
+public interface IArray<T> extends Iterable<T> {
     IArray<T> shuffle();
     IArray<T> sort(ISort sorting);
     void print();
