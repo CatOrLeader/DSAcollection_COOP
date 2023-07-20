@@ -3,10 +3,11 @@ package datastructures.arrays;
 import algorithms.sortings.ISort;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
-public class DoubleArray implements IArray<Double> {
+public class DoubleArray implements IArray<Double>, Iterable<Double> {
     private ArrayList<Double> array = new ArrayList<>();
 
     public DoubleArray() {
@@ -30,17 +31,21 @@ public class DoubleArray implements IArray<Double> {
     }
 
     @Override
-    public void shuffle() {
+    public DoubleArray shuffle() {
         Random random = new Random();
         for (int i = 0; i < array.size(); i++) {
             int j = random.nextInt(i + 1);
             swap(i, j);
         }
+
+        return this;
     }
 
     @Override
-    public void sort(ISort sorting) {
+    public DoubleArray sort(ISort sorting) {
         sorting.sort(this.array);
+
+        return this;
     }
 
     @Override
@@ -91,9 +96,41 @@ public class DoubleArray implements IArray<Double> {
         }
     }
 
+    @Override
+    public int size() {
+        return array.size();
+    }
+
     private void swap(int i, int j) {
         double temp = array.get(i);
         array.set(i, array.get(j));
         array.set(j, temp);
+    }
+
+    @Override
+    public Iterator<Double> iterator() {
+        return new DoubleArrayIterator();
+    }
+
+    private class DoubleArrayIterator implements Iterator<Double> {
+        private int currentIndex = 0;
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex < array.size();
+        }
+
+        @Override
+        public Double next() {
+            if (!hasNext()) {
+                throw new IndexOutOfBoundsException("No more elements in the array.");
+            }
+            return array.get(currentIndex++);
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("Remove operation is not supported.");
+        }
     }
 }

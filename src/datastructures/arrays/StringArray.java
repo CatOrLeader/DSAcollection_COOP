@@ -3,10 +3,11 @@ package datastructures.arrays;
 import algorithms.sortings.ISort;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
-public class StringArray implements IArray<String> {
+public class StringArray implements IArray<String>, Iterable<String> {
     private ArrayList<String> array = new ArrayList<>();
 
     public StringArray() {
@@ -41,17 +42,21 @@ public class StringArray implements IArray<String> {
     }
 
     @Override
-    public void shuffle() {
+    public StringArray shuffle() {
         Random random = new Random();
         for (int i = 0; i < array.size(); i++) {
             int j = random.nextInt(i + 1);
             swap(i, j);
         }
+
+        return this;
     }
 
     @Override
-    public void sort(ISort sorting) {
+    public StringArray sort(ISort sorting) {
         sorting.sort(this.array);
+
+        return this;
     }
 
     @Override
@@ -94,6 +99,11 @@ public class StringArray implements IArray<String> {
     }
 
     @Override
+    public int size() {
+        return array.size();
+    }
+
+    @Override
     public void insertToIndex(int index, String element) {
         if (index > array.size() - 1) {
             throw new IndexOutOfBoundsException("Index is out of bounds");
@@ -106,5 +116,32 @@ public class StringArray implements IArray<String> {
         String temp = array.get(i);
         array.set(i, array.get(j));
         array.set(j, temp);
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        return new StringArrayIterator();
+    }
+
+    private class StringArrayIterator implements Iterator<String> {
+        private int currentIndex = 0;
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex < array.size();
+        }
+
+        @Override
+        public String next() {
+            if (!hasNext()) {
+                throw new IndexOutOfBoundsException("No more elements in the array.");
+            }
+            return array.get(currentIndex++);
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("Remove operation is not supported.");
+        }
     }
 }
