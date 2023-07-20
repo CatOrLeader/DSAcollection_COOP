@@ -16,3 +16,4 @@ Already refactored:
 - Based on MapADT DS (Dictionary, LinkedHashMap, SkipList, TreeMap, Trie)
 - Graphs (all types)
 - Heaps (Binary, Binomial, D, Leftist, Pairing, SKew, Ternary)
+- Trees (AVL)

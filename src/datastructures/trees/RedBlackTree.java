@@ -16,9 +16,9 @@ class RedBlackTree<T extends Comparable<T>> {
     /**
      * The root of the RBT
      */
-    public Node root;
+    private Node root;
 
-    RedBlackTree() {
+    public RedBlackTree() {
         root = null;
     }
 
@@ -27,7 +27,7 @@ class RedBlackTree<T extends Comparable<T>> {
         BLACK
     }
 
-    class Node {
+    class Node { //use just as a struct
         protected T key;
         protected Colour colour;
 
@@ -127,10 +127,10 @@ class RedBlackTree<T extends Comparable<T>> {
         root = insertionStep(root, key);
     }
 
-    boolean l = false;
-    boolean lr = false;
-    boolean rl = false;
-    boolean r = false;
+    private boolean l = false;
+    private boolean lr = false;
+    private boolean rl = false;
+    private boolean r = false;
     private Node insertionStep(Node curRoot, T key) {
         boolean problemRR = false;
 
@@ -239,7 +239,7 @@ class RedBlackTree<T extends Comparable<T>> {
     // Perform an ordinary replacement according to BST rules
     protected Node replaceBST(Node del) {
         if (del == null) {
-            return null;
+            throw new NullPointerException("Node is null");
         }
 
         int numOfChildren = 0;
@@ -264,7 +264,6 @@ class RedBlackTree<T extends Comparable<T>> {
         if (curRoot == root) {
             return;
         }
-
         Node sibling = curRoot.sibling();
         Node parent = curRoot.parent;
         if (sibling == null) {
@@ -316,7 +315,9 @@ class RedBlackTree<T extends Comparable<T>> {
     }
 
     private void deleteStep(Node del) {
-        if (del == null) return;
+        if (del == null) {
+            return;
+        }
 
         Node rep = replaceBST(del);
 
@@ -384,7 +385,7 @@ class RedBlackTree<T extends Comparable<T>> {
      */
     public Node find(Node curRoot, T key) {
         if(curRoot == null) {
-            return null;
+            throw new NullPointerException("Node is null");
         }
         if (key.compareTo(curRoot.key) == 0) {
             return curRoot;
@@ -400,6 +401,9 @@ class RedBlackTree<T extends Comparable<T>> {
 
     // Find the lower predecessor of the node
     protected Node predBelow(Node node) {
+        if (node == null) {
+            throw new NullPointerException("Node is null");
+        }
         Node temp = node;
 
         while (temp.rightChild != null) {
@@ -417,7 +421,7 @@ class RedBlackTree<T extends Comparable<T>> {
      */
     public Node pred(Node node) {
         if (node == null) {
-            return null;
+            throw new NullPointerException("Node is null");
         }
 
         if (node.leftChild != null) {
@@ -435,6 +439,9 @@ class RedBlackTree<T extends Comparable<T>> {
 
     // Find maxNode to find predecessor (Going right and down while node exist)
     private Node maxNode(Node node) {
+        if (node == null) {
+            throw new NullPointerException("Node is null");
+        }
         Node temp = node;
 
         while (temp.rightChild != null) {
@@ -452,7 +459,7 @@ class RedBlackTree<T extends Comparable<T>> {
      */
     public Node succ(Node node) {
         if (node == null) {
-            return null;
+            throw new NullPointerException("Node is null");
         }
 
         if (node.rightChild != null) {
@@ -470,6 +477,9 @@ class RedBlackTree<T extends Comparable<T>> {
 
     // Find minNode to find successor (Going left and down while node exist)
     private Node minNode(Node node) {
+        if (node == null) {
+            throw new NullPointerException("Node is null");
+        }
         Node temp = node;
 
         while (temp.leftChild != null) {
@@ -480,9 +490,9 @@ class RedBlackTree<T extends Comparable<T>> {
     }
 
     private void printInorder(Node node) {
-        if (node == null)
+        if (node == null) {
             return;
-
+        }
         /* first recur on left child */
         printInorder(node.leftChild);
 
