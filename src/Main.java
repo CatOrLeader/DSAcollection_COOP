@@ -1,10 +1,7 @@
 import algorithms.sortings.BubbleSort;
 import datastructures.arrays.IntArray;
 import datastructures.heaps.BinaryHeap;
-import datastructures.heaps.BinomialHeap;
 import datastructures.maps.Dictionary;
-
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,7 +9,13 @@ public class Main {
         array.generateRandom(20, 1, 100);
         array.sort(new BubbleSort());
         array.print();
-        BinaryHeap<Integer> binHeap = new BinaryHeap<>(array);
+
+        BinaryHeap<Integer> binHeap = new BinaryHeap<>(
+                new IntArray()
+                .generateRandom(20, 1, 100)
+                .shuffle()
+                .sort(new BubbleSort<Integer>())
+        );
         System.out.println(binHeap.findMin());
 
         System.out.println("------");

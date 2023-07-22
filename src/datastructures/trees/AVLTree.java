@@ -1,28 +1,31 @@
 package datastructures.trees;
 
 class AVLTree<T extends Comparable<T>> {
-    private Node<T> root;
+    private Node root;
+    private final Node leafNode;
 
     public AVLTree() {
-        this.root = null;
+        leafNode = new Node(null);
+        this.root = leafNode;
     }
 
     /**
      * Helper method to determine the height of a node.
      * Worst case time complexity: O(1)
      */
-    public int height(Node<T> node) {
-        if (node == null)
-            return 0;
+    public int height(Node node) {
+        if (node == leafNode) { //todo
+            throw new NullPointerException("Node is null");
+        }
         return node.height;
     }
 
     /**
      * Worst case time complexity: O(1)
      */
-    private Node<T> rightRotate(Node<T> node) {
-        Node<T> l = node.left;
-        Node<T> lr = l.right;
+    private Node rightRotate(Node node) {
+        Node l = node.left;
+        Node lr = l.right;
         l.right = node;
         node.left = lr;
         node.height = Math.max(height(node.left), height(node.right)) + 1;
@@ -33,9 +36,9 @@ class AVLTree<T extends Comparable<T>> {
     /**
      * Worst case time complexity: O(1)
      */
-    private Node<T> leftRotate(Node<T> node) {
-        Node<T> r = node.right;
-        Node<T> rl = r.left;
+    private Node leftRotate(Node node) {
+        Node r = node.right;
+        Node rl = r.left;
         r.left = node;
         node.right = rl;
         node.height = Math.max(height(node.left), height(node.right)) + 1;
@@ -46,8 +49,8 @@ class AVLTree<T extends Comparable<T>> {
     /**
      * Worst case time complexity: O(1)
      */
-    public int balance(Node<T> node) {
-        if (node == null) {
+    public int balance(Node node) {
+        if (node == null || node == leafNode) {
             return 0;
         }
         return height(node.left) - height(node.right);
@@ -63,9 +66,9 @@ class AVLTree<T extends Comparable<T>> {
     /**
      * Worst case time complexity: O(log(n))
      */
-    private Node<T> insert(Node<T> node, T key) {
-        if (node == null) {
-            return new Node<>(key);
+    private Node insert(Node node, T key) {
+        if (node == leafNode) {
+            return new Node(key);
         }
         if (node.key.compareTo(key) > 0) {
             node.left = insert(node.left, key);
@@ -103,17 +106,17 @@ class AVLTree<T extends Comparable<T>> {
     /**
      * Worst case time complexity: O(log(n))
      */
-    private Node<T> remove(Node<T> root, T key) {
-        if (root == null) {
-            return null;
+    private Node remove(Node root, T key) {
+        if (root == leafNode) {
+            throw new NullPointerException("Root node is null");
         }
         if (key.compareTo(root.key) < 0) {
             root.left = remove(root.left, key);
         } else if (key.compareTo(root.key) > 0) {
             root.right = remove(root.right, key);
         } else {
-            if (root.left == null || root.right == null) {
-                Node<T> temp;
+            if (root.left == leafNode || root.right == leafNode) {
+                Node temp;
                 if (null == root.left) {
                     temp = root.right;
                 } else {
@@ -121,13 +124,13 @@ class AVLTree<T extends Comparable<T>> {
                 }
                 root = temp;
             } else {
-                Node<T> temp = findMin(root.right);
+                Node temp = findMin(root.right);
                 root.key = temp.key;
                 root.right = remove(root.right, temp.key);
             }
         }
-        if (root == null) {
-            return null;
+        if (root == leafNode) {
+            throw new NullPointerException("Root node is null");
         }
         root.height = Math.max(height(root.left), height(root.right)) + 1;
         int balance = balance(root);
@@ -151,12 +154,12 @@ class AVLTree<T extends Comparable<T>> {
     /**
      * Worst case time complexity: O(log(n))
      */
-    public Node<T> find(T key) {
-        if (this.root == null) {
+    public Node find(T key) {
+        if (this.root == leafNode) {
             throw new NullPointerException("Root node is null");
         }
-        Node<T> curNode = this.root;
-        while (curNode != null && curNode.key.compareTo(key) != 0) {
+        Node curNode = this.root;
+        while (curNode != leafNode && curNode.key.compareTo(key) != 0) {
             if (curNode.key.compareTo(key) > 0) {
                 curNode = curNode.left;
             } else {
@@ -169,21 +172,21 @@ class AVLTree<T extends Comparable<T>> {
     /**
      * Worst case time complexity: O(log(n))
      */
-    public Node<T> predecessor(Node<T> node) {
-        if (node == null) {
+    public Node predecessor(Node node) {
+        if (node == leafNode) {
             throw new NullPointerException("Current node is null");
         }
-        Node<T> current;
-        if (node.left != null) {
+        Node current;
+        if (node.left != leafNode) {
             current = node.left;
-            while (current.right != null) {
+            while (current.right != leafNode) {
                 current = current.right;
             }
             return current;
         } else {
             current = node;
-            Node<T> parent = parent(node);
-            while (parent != null && current == parent.left) {
+            Node parent = parent(node);
+            while (parent != leafNode && current == parent.left) {
                 current = parent;
                 parent = parent(parent);
             }
@@ -194,21 +197,21 @@ class AVLTree<T extends Comparable<T>> {
     /**
      * Worst case time complexity: O(log(n))
      */
-    public Node<T> successor(Node<T> node) {
-        if (node == null) {
+    public Node successor(Node node) {
+        if (node == leafNode) {
             throw new NullPointerException("Current node is null");
         }
-        Node<T> current;
-        if (node.right != null) {
+        Node current;
+        if (node.right != leafNode) {
             current = node.right;
-            while (current.left != null) {
+            while (current.left != leafNode) {
                 current = current.left;
             }
             return current;
         } else {
             current = node;
-            Node<T> parent = parent(node);
-            while (parent != null && current == parent.right) {
+            Node parent = parent(node);
+            while (parent != leafNode && current == parent.right) {
                 current = parent;
                 parent = parent(parent);
             }
@@ -219,13 +222,13 @@ class AVLTree<T extends Comparable<T>> {
     /**
      * Worst case time complexity: O(log(n))
      */
-    private Node<T> parent(Node<T> node) {
+    private Node parent(Node node) {
         if (node == this.root) {
-            return null;
+            return leafNode;
         }
-        Node<T> curNode = this.root;
-        while (curNode.left != null && curNode.left.key.compareTo(node.key) != 0
-                && curNode.right != null && curNode.right.key.compareTo(node.key) != 0) {
+        Node curNode = this.root;
+        while (curNode.left != leafNode && curNode.left.key.compareTo(node.key) != 0
+                && curNode.right != leafNode && curNode.right.key.compareTo(node.key) != 0) {
             if (node.key.compareTo(curNode.key) > 0) {
                 curNode = curNode.right;
             } else {
@@ -238,24 +241,24 @@ class AVLTree<T extends Comparable<T>> {
     /**
      * Worst case time complexity: O(log(n))
      */
-    private Node<T> findMin(Node<T> node) {
-        Node<T> current = node;
-        while (current.left != null) {
+    private Node findMin(Node node) {
+        Node current = node;
+        while (current.left != leafNode) {
             current = current.left;
         }
         return current;
     }
 
-    class Node<T extends Comparable<T>> { //use just as a struct
+    class Node { //use just as a struct
         public T key;
         public int height;
-        public Node<T> left;
-        public Node<T> right;
+        public Node left;
+        public Node right;
 
         public Node(T key) {
             this.key = key;
-            this.left = null;
-            this.right = null;
+            this.left = leafNode;
+            this.right = leafNode;
             this.height = 1;
         }
     }
