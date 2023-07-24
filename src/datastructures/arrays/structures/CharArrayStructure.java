@@ -25,7 +25,7 @@ public class CharArrayStructure {
     }
 
     public ArrayList<Character> generateWithoutRepetitions(int length, char min, char max) {
-        if (max - min < length) {
+        if (max - min + 1 < length) {
             throw new RuntimeException("Impossible to create array without repetitions!");
         }
 

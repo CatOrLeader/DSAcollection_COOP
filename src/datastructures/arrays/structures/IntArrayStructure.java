@@ -47,7 +47,7 @@ public class IntArrayStructure {
     }
 
     public ArrayList<Integer> generateWithoutRepetitions(int length, int min, int max) {
-        if (max - min < length) {
+        if (max - min + 1 < length) {
             throw new RuntimeException("Impossible to create array without repetitions!");
         }
 

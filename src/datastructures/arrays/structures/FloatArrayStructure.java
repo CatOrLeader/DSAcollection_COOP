@@ -47,7 +47,7 @@ public class FloatArrayStructure {
     }
 
     public ArrayList<Float> generateWithoutRepetitions(int length, float min, float max) {
-        if (max - min < length) {
+        if (max - min + 1 < length) {
             throw new RuntimeException("Impossible to create array without repetitions!");
         }
 
