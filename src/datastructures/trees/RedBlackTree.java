@@ -515,4 +515,8 @@ public class RedBlackTree<T extends Comparable<T>> {
     void printInorder() {
         printInorder(root);
     }
+
+    public void accept(TreeVisitor<T> visitor) {
+        visitor.visit(this);
+    }
 }

@@ -125,6 +125,11 @@ public class PairingHeap<T extends Comparable<T>> implements Heap<T> {
         }
     }
 
+    @Override
+    public void accept(HeapVisitor<T> visitor) {
+        visitor.visit(this);
+    }
+
     private void printHeap(Node node, int level) {
         if (node == leafNode) {
             return;

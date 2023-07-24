@@ -150,6 +150,11 @@ public class GraphAM<N, E extends Comparable<E>> implements GraphADT<N, E> {
         return true;
     }
 
+    @Override
+    public void accept(GraphVisitor<N, E> visitor) {
+        visitor.visit(this);
+    }
+
     class MatrixCell {
         public N data;
         public E weight;

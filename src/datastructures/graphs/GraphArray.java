@@ -182,6 +182,11 @@ public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
         return false;
     }
 
+    @Override
+    public void accept(GraphVisitor<N, E> visitor) {
+        visitor.visit(this);
+    }
+
     class Edge {
         private final N src;
         private final N dest;

@@ -14,4 +14,6 @@ public interface IStackADT<T> {
     void pop();
 
     T peek();
+
+    void accept(StackVisitor<T> visitor);
 }

@@ -9,4 +9,5 @@ public interface GraphADT<N, E extends Comparable<E>> {
     E weight(int v, int w);
     void removeEdge(int v, int w);
     boolean hasEdge(int v, int w);
+    void accept(GraphVisitor<N, E> visitor);
 }

@@ -100,6 +100,11 @@ public class LeftistHeap<T extends Comparable<T>> implements Heap<T> {
         printHeap(root, 0);
     }
 
+    @Override
+    public void accept(HeapVisitor<T> visitor) {
+        visitor.visit(this);
+    }
+
     private void printHeap(Node node, int level) {
         if (node == leafNode) {
             return;

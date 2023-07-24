@@ -21,5 +21,8 @@ interface MapADT<K, V> {
     Iterable<V> values();
 
     Iterable<KeyValuePair<K, V>> entrySet();
+
     void print();
+
+    void accept(MapVisitor<K, V> visitor);
 }
