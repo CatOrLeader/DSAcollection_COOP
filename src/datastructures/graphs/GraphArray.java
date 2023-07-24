@@ -19,6 +19,29 @@ public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
     }
 
     @Override
+    public ArrayList<N> nodes() {
+        return nodes;
+    }
+
+    @Override
+    public ArrayList<N> adjacentNodes(N node) {
+        ArrayList<N> adjacentNodes = new ArrayList<>();
+
+        for (int i = 0; i < edges.size(); i++) {
+            Edge current = edges.get(i);
+
+            if (current.src.equals(node)) {
+                N probableAdj = current.dest;
+                if (!adjacentNodes.contains(probableAdj)) {
+                    adjacentNodes.add(probableAdj);
+                }
+            }
+        }
+
+        return adjacentNodes;
+    }
+
+    @Override
     public int nodeCount() {
         return nodes.size();
     }
@@ -183,8 +206,8 @@ public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
     }
 
     @Override
-    public void accept(GraphVisitor<N, E> visitor) {
-        visitor.visit(this);
+    public void accept(GraphAlgorithm<N, E> algorithm) {
+        algorithm.implement(this);
     }
 
     class Edge {
@@ -196,6 +219,18 @@ public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
             this.src = src;
             this.dest = dest;
             this.weight = weight;
+        }
+
+        private N source() {
+            return src;
+        }
+
+        private N destination() {
+            return dest;
+        }
+
+        private E weight() {
+            return weight;
         }
     }
 }

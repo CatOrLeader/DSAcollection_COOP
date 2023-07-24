@@ -24,5 +24,5 @@ interface MapADT<K, V> {
 
     void print();
 
-    void accept(MapVisitor<K, V> visitor);
+    void accept(MapAlgorithm<K, V> algorithm);
 }

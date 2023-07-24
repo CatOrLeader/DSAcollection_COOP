@@ -81,6 +81,11 @@ public class CircularQueue<E> implements QueueADT<E> {
         return front();
     }
 
+    @Override
+    public void accept(QueueAlgorithm<E> algorithm) {
+        algorithm.implement(this);
+    }
+
     public boolean isEmpty() {
         return size == 0;
     }

@@ -9,5 +9,6 @@ public interface QueueADT<E> {
     E poll();
     E front();
     E peek();
+    void accept(QueueAlgorithm<E> algorithm);
 }
 

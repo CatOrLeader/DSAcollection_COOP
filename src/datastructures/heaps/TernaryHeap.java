@@ -98,8 +98,8 @@ public class TernaryHeap<T extends Comparable<T>> implements Heap<T> {
     }
 
     @Override
-    public void accept(HeapVisitor<T> visitor) {
-        visitor.visit(this);
+    public void accept(HeapAlgorithm<T> algorithm) {
+        algorithm.implement(this);
     }
 
     private void printHeap(int index, int level) {

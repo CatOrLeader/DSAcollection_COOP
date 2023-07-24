@@ -74,7 +74,7 @@ public class StackArray<T> implements IStackADT<T> {
     }
 
     @Override
-    public void accept(StackVisitor<T> visitor) {
-        visitor.visit(this);
+    public void accept(StackAlgorithm<T> algorithm) {
+        algorithm.implement(this);
     }
 }

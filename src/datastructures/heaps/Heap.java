@@ -16,6 +16,6 @@ public interface Heap<T extends Comparable<T>> {
 
     void print();
 
-    void accept(HeapVisitor<T> visitor);
+    void accept(HeapAlgorithm<T> algorithm);
 }
 

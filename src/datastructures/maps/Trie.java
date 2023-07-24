@@ -137,7 +137,7 @@ public class Trie implements MapADT<String, Integer> {
     }
 
     @Override
-    public void accept(MapVisitor<String, Integer> visitor) {
-        visitor.visit(this);
+    public void accept(MapAlgorithm<String, Integer> algorithm) {
+        algorithm.implement(this);
     }
 }

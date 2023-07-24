@@ -264,7 +264,7 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
     }
 
     @Override
-    public void accept(MapVisitor<K, V> visitor) {
-        visitor.visit(this);
+    public void accept(MapAlgorithm<K, V> algorithm) {
+        algorithm.implement(this);
     }
 }

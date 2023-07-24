@@ -37,6 +37,30 @@ public class GraphAM<N, E extends Comparable<E>> implements GraphADT<N, E> {
     }
 
     @Override
+    public ArrayList<N> nodes() {
+        return nodes;
+    }
+
+    @Override
+    public ArrayList<N> adjacentNodes(N node) {
+        ArrayList<N> adjacentNodes = new ArrayList<>();
+
+        int currentIndex = nodes.indexOf(node);
+        ArrayList<MatrixCell> row = adjacencyMatrix[currentIndex];
+
+        for (int i = 0; i < row.size(); i++) {
+            MatrixCell current = row.get(i);
+
+            if (!current.isEmptyCell()) {
+                N nodeTBA = nodes.get(i);
+                adjacentNodes.add(nodeTBA);
+            }
+        }
+
+        return adjacentNodes;
+    }
+
+    @Override
     public int nodeCount() {
         return nodes.size();
     }
@@ -151,8 +175,8 @@ public class GraphAM<N, E extends Comparable<E>> implements GraphADT<N, E> {
     }
 
     @Override
-    public void accept(GraphVisitor<N, E> visitor) {
-        visitor.visit(this);
+    public void accept(GraphAlgorithm<N, E> algorithm) {
+        algorithm.implement(this);
     }
 
     class MatrixCell {

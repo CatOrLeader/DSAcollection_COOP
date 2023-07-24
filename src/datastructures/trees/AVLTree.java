@@ -252,8 +252,8 @@ public class AVLTree<T extends Comparable<T>> {
         return current;
     }
 
-    public void accept(TreeVisitor<T> visitor) {
-        visitor.visit(this);
+    public void accept(TreeAlgorithm<T> algorithm) {
+        algorithm.implement(this);
     }
 
     class Node { //use just as a struct
