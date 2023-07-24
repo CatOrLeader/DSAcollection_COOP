@@ -78,4 +78,9 @@ public class StackSLL<T> implements IStackADT<T> {
     public T peek() {
         return stackHead.obj;
     }
+
+    @Override
+    public void accept(StackVisitor<T> visitor) {
+        visitor.visit(this);
+    }
 }

@@ -247,4 +247,9 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
             System.out.println(pair.key + " : " + pair.value);
         }
     }
+
+    @Override
+    public void accept(MapVisitor<K, V> visitor) {
+        visitor.visit(this);
+    }
 }

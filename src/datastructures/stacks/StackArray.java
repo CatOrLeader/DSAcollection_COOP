@@ -72,4 +72,9 @@ public class StackArray<T> implements IStackADT<T> {
 
         return stack.get(size - 1);
     }
+
+    @Override
+    public void accept(StackVisitor<T> visitor) {
+        visitor.visit(this);
+    }
 }

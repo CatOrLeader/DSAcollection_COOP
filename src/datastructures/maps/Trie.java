@@ -135,4 +135,9 @@ public class Trie implements MapADT<String, Integer> {
             System.out.println(pair.key + " : " + pair.value);
         }
     }
+
+    @Override
+    public void accept(MapVisitor<String, Integer> visitor) {
+        visitor.visit(this);
+    }
 }

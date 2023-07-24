@@ -107,6 +107,11 @@ public class DHeap<T extends Comparable<T>> implements Heap<T> {
         printHeap(0, 0);
     }
 
+    @Override
+    public void accept(HeapVisitor<T> visitor) {
+        visitor.visit(this);
+    }
+
     private void printHeap(int index, int level) {
         if (index >= heap.size()) {
             return;

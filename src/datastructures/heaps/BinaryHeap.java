@@ -96,6 +96,11 @@ public class BinaryHeap<T extends Comparable<T>> implements Heap<T> {
         System.out.println();
     }
 
+    @Override
+    public void accept(HeapVisitor<T> visitor) {
+        visitor.visit(this);
+    }
+
     private void printElement(T element) {
         System.out.print(element + " ");
     }

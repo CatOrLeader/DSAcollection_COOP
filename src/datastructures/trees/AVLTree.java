@@ -252,6 +252,10 @@ public class AVLTree<T extends Comparable<T>> {
         return current;
     }
 
+    public void accept(TreeVisitor<T> visitor) {
+        visitor.visit(this);
+    }
+
     class Node { //use just as a struct
         public T key;
         public int height;

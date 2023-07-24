@@ -174,6 +174,11 @@ public class BinomialHeap<T extends Comparable<T>> implements Heap<T> {
         }
     }
 
+    @Override
+    public void accept(HeapVisitor<T> visitor) {
+        visitor.visit(this);
+    }
+
     private void printTree(T root, List<BinomialTree<T>> children) {
         System.out.print(root + " ");
         for (BinomialTree<T> child : children) {

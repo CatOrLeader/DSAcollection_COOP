@@ -97,6 +97,11 @@ public class TernaryHeap<T extends Comparable<T>> implements Heap<T> {
         }
     }
 
+    @Override
+    public void accept(HeapVisitor<T> visitor) {
+        visitor.visit(this);
+    }
+
     private void printHeap(int index, int level) {
         if (index >= heap.size()) {
             return;
