@@ -1,5 +1,7 @@
 package datastructures.graphs;
 
+import datastructures.EmptyObject;
+
 import java.util.ArrayList;
 
 /**
@@ -14,7 +16,7 @@ public class GraphAM<N, E extends Comparable<E>> implements GraphADT<N, E> {
     private static final String srcNodeAbsent = "Source node is absent in the graph";
     private static final String destNodeAbsent = "Destination node is absent in the graph";
     private static final String noSuchEdge = "No such edge";
-    private final E incorrectIndexObj = (E) new Object();
+    private final E incorrectIndexObj = (E) new EmptyObject();
 
 
     private final ArrayList<N> nodes;
@@ -58,6 +60,16 @@ public class GraphAM<N, E extends Comparable<E>> implements GraphADT<N, E> {
         }
 
         return adjacentNodes;
+    }
+
+    @Override
+    public void addNode(N node) {
+        System.out.println("Graph based on adjacency matrix is immutable in terms of nodes");
+    }
+
+    @Override
+    public void addNodes(ArrayList<N> nodes) {
+        System.out.println("Graph based on adjacency matrix is immutable in terms of nodes");
     }
 
     @Override

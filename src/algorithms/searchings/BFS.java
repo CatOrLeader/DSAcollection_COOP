@@ -24,7 +24,7 @@ public class BFS<N, E extends Comparable<E>> {
             N currentNode = queue.poll();
             int currentIndex = nodes.indexOf(currentNode);
 
-            System.out.println(currentIndex + " ");
+            System.out.print(currentIndex + " ");
 
             List<N> adjacent = graph.adjacentNodes(currentNode);
 

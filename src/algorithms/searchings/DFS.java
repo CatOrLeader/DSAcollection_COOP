@@ -17,7 +17,7 @@ public class DFS<N, E extends Comparable<E>> {
 
     private void recursive(GraphADT<N, E> graph, int currentIndex, boolean[] visited) {
         visited[currentIndex] = true;
-        System.out.println(currentIndex + " ");
+        System.out.print(currentIndex + " ");
 
         ArrayList<N> nodes = graph.nodes();
         N curNode = nodes.get(currentIndex);

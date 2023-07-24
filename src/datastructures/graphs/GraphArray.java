@@ -1,5 +1,9 @@
 package datastructures.graphs;
 
+import datastructures.EmptyObject;
+import datastructures.arrays.IArray;
+import datastructures.arrays.IntArray;
+
 import java.util.ArrayList;
 
 public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
@@ -8,14 +12,23 @@ public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
     private static final String srcNodeAbsent = "Source node is absent in the graph";
     private static final String destNodeAbsent = "Destination node is absent in the graph";
     private static final String noSuchEdge = "No such edge";
-    private final E incorrectIndexObj = (E) new Object();
+    private final E incorrectIndexObj = (E) new EmptyObject();
 
     private final ArrayList<N> nodes;
-    private final ArrayList<Edge> edges;
+    private final ArrayList<Edge<N, E>> edges;
 
     public GraphArray() {
         nodes = new ArrayList<>();
         edges = new ArrayList<>();
+    }
+
+
+    public GraphArray(IArray<Integer> nodes, ArrayList<Edge<N, E>> edges) {
+        this.nodes = new ArrayList<>();
+        for (Integer integer : nodes) {
+            this.nodes.add((N) integer);
+        }
+        this.edges = edges;
     }
 
     @Override
@@ -28,10 +41,10 @@ public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
         ArrayList<N> adjacentNodes = new ArrayList<>();
 
         for (int i = 0; i < edges.size(); i++) {
-            Edge current = edges.get(i);
+            Edge<N, E> current = edges.get(i);
 
-            if (current.src.equals(node)) {
-                N probableAdj = current.dest;
+            if (current.source().equals(node)) {
+                N probableAdj = current.destination();
                 if (!adjacentNodes.contains(probableAdj)) {
                     adjacentNodes.add(probableAdj);
                 }
@@ -39,6 +52,16 @@ public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
         }
 
         return adjacentNodes;
+    }
+
+    @Override
+    public void addNode(N node) {
+        nodes.add(node);
+    }
+
+    @Override
+    public void addNodes(ArrayList<N> nodes) {
+        this.nodes.addAll(nodes);
     }
 
     @Override
@@ -77,7 +100,7 @@ public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
 
         N src = nodes.get(v);
         N dest = nodes.get(w);
-        Edge edge = new Edge(src, dest, weight);
+        Edge<N, E> edge = new Edge<>(src, dest, weight);
         edges.add(edge);
     }
 
@@ -100,12 +123,12 @@ public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
         N src;
         N dest;
 
-        for (Edge value : edges) {
+        for (Edge<N, E> value : edges) {
             int checkers = 0;
-            Edge edge = value;
+            Edge<N, E> edge = value;
 
-            src = edge.src;
-            dest = edge.dest;
+            src = edge.source();
+            dest = edge.destination();
 
             if (srcNeeded.equals(src)) {
                 checkers++;
@@ -116,7 +139,7 @@ public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
             }
 
             if (checkers == 2) {
-                E weight = edge.weight;
+                E weight = edge.weight();
                 return weight;
             }
         }
@@ -143,9 +166,9 @@ public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
 
         N src;
         N dest;
-        for (Edge edge : edges) {
-            src = edge.src;
-            dest = edge.dest;
+        for (Edge<N, E> edge : edges) {
+            src = edge.source();
+            dest = edge.destination();
             int checkers = 0;
 
             if (srcNeeded.equals(src)) {
@@ -183,9 +206,9 @@ public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
 
         N src;
         N dest;
-        for (Edge edge : edges) {
-            src = edge.src;
-            dest = edge.dest;
+        for (Edge<N, E> edge : edges) {
+            src = edge.source();
+            dest = edge.destination();
             int checkers = 0;
 
             if (srcNeeded.equals(src)) {
@@ -208,29 +231,5 @@ public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
     @Override
     public void accept(GraphAlgorithm<N, E> algorithm) {
         algorithm.implement(this);
-    }
-
-    class Edge {
-        private final N src;
-        private final N dest;
-        private final E weight;
-
-        public Edge(N src, N dest, E weight) {
-            this.src = src;
-            this.dest = dest;
-            this.weight = weight;
-        }
-
-        private N source() {
-            return src;
-        }
-
-        private N destination() {
-            return dest;
-        }
-
-        private E weight() {
-            return weight;
-        }
     }
 }
