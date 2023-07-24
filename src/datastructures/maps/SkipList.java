@@ -1,6 +1,8 @@
 package datastructures.maps;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SkipList<K extends Comparable<K>, V> implements MapADT<K, V> {
     private static final int MAX_LEVEL = 32;

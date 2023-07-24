@@ -1,17 +1,19 @@
 package datastructures.maps;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Trie implements MapADT<String, Integer> {
     private TrieNode root;
     private final TrieNode emptyNode;
 
     private class TrieNode { //use just as a struct
-        Map<Character, TrieNode> children;
+        HashMapSC<Character, TrieNode> children;
         int value;
 
         TrieNode() {
-            children = new HashMap<>();
+            children = new HashMapSC<>();
             value = 0;
         }
     }
@@ -48,7 +50,7 @@ public class Trie implements MapADT<String, Integer> {
     private TrieNode findNode(String key) {
         TrieNode current = root;
         for (char c : key.toCharArray()) {
-            current = current.children.get(c);
+            current = current.children.find(c);
             if (current == emptyNode) {
                 return emptyNode;
             }
@@ -60,7 +62,12 @@ public class Trie implements MapADT<String, Integer> {
     public void put(String key, Integer value) {
         TrieNode current = root;
         for (char c : key.toCharArray()) {
-            current = current.children.computeIfAbsent(c, k -> new TrieNode());
+            TrieNode child = current.children.find(c);
+            if (child == null) {
+                child = new TrieNode();
+                current.children.put(c, child);
+            }
+            current = child;
         }
         current.value = value;
     }
@@ -84,8 +91,8 @@ public class Trie implements MapADT<String, Integer> {
         if (node.value != 0) {
             keys.add(prefix);
         }
-        for (Map.Entry<Character, TrieNode> entry : node.children.entrySet()) {
-            collectKeys(entry.getValue(), prefix + entry.getKey(), keys);
+        for (KeyValuePair<Character, TrieNode> entry : node.children.entrySet()) {
+            collectKeys(entry.value, prefix + entry.key, keys);
         }
     }
 
@@ -116,8 +123,8 @@ public class Trie implements MapADT<String, Integer> {
         if (node.value != 0) {
             entries.add(new KeyValuePair<>(prefix, node.value));
         }
-        for (Map.Entry<Character, TrieNode> entry : node.children.entrySet()) {
-            collectEntries(entry.getValue(), prefix + entry.getKey(), entries);
+        for (KeyValuePair<Character, TrieNode> entry : node.children.entrySet()) {
+            collectEntries(entry.value, prefix + entry.key, entries);
         }
     }
 

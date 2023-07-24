@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Dictionary<K, V> implements MapADT<K, V> {
-    private HashMapSC<K, V> map;
+    private MapADT<K, V> map;
 
-    public Dictionary() {
-        map = new HashMapSC<>();
+    public Dictionary(MapADT<K, V> map) {
+        this.map = map;
     }
 
     @Override

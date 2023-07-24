@@ -1,6 +1,10 @@
 package datastructures.maps;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+
 public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
     private Node root;
     private int size;
@@ -40,7 +44,11 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
     @Override
     public V find(K key) {
         Node node = findNode(root, key);
-        return (node != emptyPair) ? node.value : emptyPair.value;
+        if (node == emptyPair) {
+            throw new NoSuchElementException("No value with such key");
+        } else {
+            return node.value;
+        }
     }
 
     private Node findNode(Node node, K key) {

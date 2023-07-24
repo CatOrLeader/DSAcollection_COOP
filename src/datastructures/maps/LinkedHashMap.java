@@ -1,11 +1,13 @@
 package datastructures.maps;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LinkedHashMap<K, V> implements MapADT<K, V> {
     private LinkedHashMapNode head;
     private LinkedHashMapNode tail;
-    private Map<K, LinkedHashMapNode> map;
+    private MapADT<K, LinkedHashMapNode> map;
     private final LinkedHashMapNode emptyPair;
 
     private class LinkedHashMapNode { //use just as a struct
@@ -22,13 +24,13 @@ public class LinkedHashMap<K, V> implements MapADT<K, V> {
         }
     }
 
-    public LinkedHashMap() {
+    public LinkedHashMap(MapADT<K, LinkedHashMapNode> map) {
         emptyPair = new LinkedHashMapNode(null, null);
         head = emptyPair;
         tail = emptyPair;
         head.next = tail;
         tail.prev = head;
-        map = new HashMap<>();
+        this.map = map;
     }
 
     @Override
@@ -43,7 +45,7 @@ public class LinkedHashMap<K, V> implements MapADT<K, V> {
 
     @Override
     public V find(K key) {
-        LinkedHashMapNode node = map.get(key);
+        LinkedHashMapNode node = map.find(key);
         if (node != emptyPair) {
             removeNode(node);
             addNodeToEnd(node);
@@ -54,7 +56,7 @@ public class LinkedHashMap<K, V> implements MapADT<K, V> {
 
     @Override
     public void put(K key, V value) {
-        LinkedHashMapNode node = map.get(key);
+        LinkedHashMapNode node = map.find(key);
         if (node != emptyPair) {
             node.value = value;
             removeNode(node);
@@ -68,7 +70,7 @@ public class LinkedHashMap<K, V> implements MapADT<K, V> {
 
     @Override
     public void remove(K key) {
-        LinkedHashMapNode node = map.get(key);
+        LinkedHashMapNode node = map.find(key);
         if (node != emptyPair) {
             removeNode(node);
             map.remove(key);
