@@ -25,6 +25,11 @@ public class BogoSort<T extends Comparable<T>> implements ISort<T> {
         }
     }
 
+    @Override
+    public void printSortName() {
+        System.out.println("Bogo sorting");
+    }
+
     private boolean isSorted(ArrayList<T> array) {
         int n = array.size();
         for (int i = 1; i < n; i++) {

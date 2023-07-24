@@ -29,5 +29,10 @@ public class InsertionSort<T extends Comparable<T>> implements ISort<T> {
             array.set(j + 1, key);
         }
     }
+
+    @Override
+    public void printSortName() {
+        System.out.println("Insertion sorting");
+    }
 }
 

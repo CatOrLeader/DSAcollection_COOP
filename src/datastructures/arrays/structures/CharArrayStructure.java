@@ -21,7 +21,7 @@ public class CharArrayStructure {
             this.array.add(randomChar);
         }
 
-        return this.array;
+        return (ArrayList<Character>) this.array.clone();
     }
 
     public ArrayList<Character> generateWithoutRepetitions(int length, char min, char max) {
@@ -46,7 +46,7 @@ public class CharArrayStructure {
             array.add(element);
         }
 
-        return array;
+        return (ArrayList<Character>) array.clone();
     }
 
     public ArrayList<Character> generateWithRepetitions(int length, char min, char max) {
@@ -63,7 +63,7 @@ public class CharArrayStructure {
             array.add(random);
         }
 
-        return array;
+        return (ArrayList<Character>) this.array.clone();
     }
 
     public ArrayList<Character> currentArray() {
@@ -71,6 +71,6 @@ public class CharArrayStructure {
             throw new NullPointerException("Array was null!");
         }
 
-        return this.array;
+        return (ArrayList<Character>) this.array.clone();
     }
 }

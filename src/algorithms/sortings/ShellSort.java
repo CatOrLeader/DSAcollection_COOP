@@ -17,6 +17,11 @@ public class ShellSort<T extends Comparable<T>> implements ISort<T> {
         shellSort(array);
     }
 
+    @Override
+    public void printSortName() {
+        System.out.println("Shell sorting");
+    }
+
     private void shellSort(ArrayList<T> array) {
         int n = array.size();
 

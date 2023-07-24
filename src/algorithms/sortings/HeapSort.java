@@ -27,6 +27,11 @@ public class HeapSort<T extends Comparable<T>> implements ISort<T> {
         }
     }
 
+    @Override
+    public void printSortName() {
+        System.out.println("Heap sorting");
+    }
+
     private void heapify(ArrayList<T> array, int n, int i) {
         int largest = i;
         int left = 2 * i + 1;

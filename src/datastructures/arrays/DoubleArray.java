@@ -25,8 +25,8 @@ public class DoubleArray implements IArray<Double>, Iterable<Double> {
     public DoubleArray(ArrayList<Double> array) {
         this.array = new ArrayList<>();
 
-        for (double v : array) {
-            this.array.add(v);
+        for (double element : array) {
+            this.array.add(element);
         }
     }
 

@@ -8,7 +8,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class CharArray implements IArray<Character>, Iterable<Character> {
-    private final ArrayList<Character> array;
+    private ArrayList<Character> array;
 
     public CharArray() {
         array = new ArrayList<>();

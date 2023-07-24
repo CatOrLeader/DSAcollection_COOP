@@ -20,7 +20,7 @@ public class DoubleArrayStructure {
             this.array.add(randomDouble);
         }
 
-        return this.array;
+        return (ArrayList<Double>) this.array.clone();
     }
 
     public ArrayList<Double> generateSorted(int size, double valueFrom, double step) {
@@ -31,7 +31,7 @@ public class DoubleArrayStructure {
             array.add(valueFrom);
             valueFrom += step;
         }
-        return array;
+        return (ArrayList<Double>) array.clone();
     }
 
     public ArrayList<Double> generateReversed(int size, double valueFrom, double step) {
@@ -43,7 +43,7 @@ public class DoubleArrayStructure {
             valueFrom -= step;
         }
 
-        return array;
+        return (ArrayList<Double>) array.clone();
     }
 
     public ArrayList<Double> generateWithoutRepetitions(int length, int min, int max)
@@ -70,7 +70,7 @@ public class DoubleArrayStructure {
             array.add(element);
         }
 
-        return array;
+        return (ArrayList<Double>) array.clone();
     }
 
     public ArrayList<Double> generateWithRepetitions(int length, int min, int max)
@@ -89,7 +89,7 @@ public class DoubleArrayStructure {
             array.add(random);
         }
 
-        return array;
+        return (ArrayList<Double>) array.clone();
     }
 
     public ArrayList<Double> currentArray() {
@@ -97,6 +97,6 @@ public class DoubleArrayStructure {
             throw new NullPointerException("Array was null!");
         }
 
-        return this.array;
+        return (ArrayList<Double>) this.array.clone();
     }
 }

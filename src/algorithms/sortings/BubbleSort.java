@@ -23,6 +23,11 @@ public class BubbleSort<T extends Comparable<T>> implements ISort<T> {
         }
     }
 
+    @Override
+    public void printSortName() {
+        System.out.println("Bubble sorting");
+    }
+
     private void swap(ArrayList<T> array, int i, int j) {
         T temp = array.get(i);
         array.set(i, array.get(j));

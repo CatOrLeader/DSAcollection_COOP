@@ -31,6 +31,11 @@ public class CombSort<T extends Comparable<T>> implements ISort<T>  {
         }
     }
 
+    @Override
+    public void printSortName() {
+        System.out.println("Comb sorting");
+    }
+
     private int nextGap(int gap) {
         gap = (gap * 10) / 13;
         return Math.max(gap, 1);

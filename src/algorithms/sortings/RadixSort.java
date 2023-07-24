@@ -16,6 +16,11 @@ public class RadixSort<T extends Comparable<T>> implements ISort<T> {
         radixSort(array);
     }
 
+    @Override
+    public void printSortName() {
+        System.out.println("Radix sorting");
+    }
+
     private void radixSort(ArrayList<T> array) {
         // Find the maximum value in the array
         T max = getMaxValue(array);

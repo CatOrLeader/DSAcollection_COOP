@@ -82,7 +82,7 @@ public class StringArrayStructure {
             array.add(element);
         }
 
-        return array;
+        return (ArrayList<String>) array.clone();
     }
 
     public ArrayList<String> currentArray() {
@@ -90,6 +90,6 @@ public class StringArrayStructure {
             throw new NullPointerException("Array was null!");
         }
 
-        return this.array;
+        return (ArrayList<String>) this.array.clone();
     }
 }

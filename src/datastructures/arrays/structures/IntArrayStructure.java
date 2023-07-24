@@ -21,7 +21,7 @@ public class IntArrayStructure {
             this.array.add(randomInt);
         }
 
-        return this.array;
+        return (ArrayList<Integer>) this.array.clone();
     }
 
     public ArrayList<Integer> generateSorted(int size, int valueFrom, int step) {
@@ -32,7 +32,7 @@ public class IntArrayStructure {
             valueFrom += step;
         }
 
-        return array;
+        return (ArrayList<Integer>) array.clone();
     }
 
     public ArrayList<Integer> generateReversed(int size, int valueFrom, int step) {
@@ -43,7 +43,7 @@ public class IntArrayStructure {
             valueFrom -= step;
         }
 
-        return array;
+        return (ArrayList<Integer>) array.clone();
     }
 
     public ArrayList<Integer> generateWithoutRepetitions(int length, int min, int max) {
@@ -68,7 +68,7 @@ public class IntArrayStructure {
             array.add(element);
         }
 
-        return array;
+        return (ArrayList<Integer>) array.clone();
     }
 
     public ArrayList<Integer> generateWithRepetitions(int length, int min, int max) {
@@ -85,7 +85,7 @@ public class IntArrayStructure {
             array.add(random);
         }
 
-        return array;
+        return (ArrayList<Integer>) array.clone();
     }
 
     public ArrayList<Integer> currentArray() {
@@ -93,7 +93,7 @@ public class IntArrayStructure {
             throw new NullPointerException("Array was null!");
         }
 
-        return this.array;
+        return (ArrayList<Integer>) this.array.clone();
     }
 }
 

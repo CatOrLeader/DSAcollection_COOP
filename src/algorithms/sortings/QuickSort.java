@@ -16,6 +16,11 @@ public class QuickSort<T extends Comparable<T>> implements ISort<T> {
         quickSort(array, 0, array.size() - 1);
     }
 
+    @Override
+    public void printSortName() {
+        System.out.println("Quick sorting");
+    }
+
     private void quickSort(ArrayList<T> array, int low, int high) {
         if (low < high) {
             int pivotIndex = partition(array, low, high);

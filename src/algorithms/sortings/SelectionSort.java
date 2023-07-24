@@ -16,6 +16,11 @@ public class SelectionSort<T extends Comparable<T>> implements ISort<T> {
         selectionSort(array);
     }
 
+    @Override
+    public void printSortName() {
+        System.out.println("Selection sorting");
+    }
+
     private void selectionSort(ArrayList<T> array) {
         int n = array.size();
 

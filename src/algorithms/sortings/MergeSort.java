@@ -73,4 +73,9 @@ public class MergeSort<T extends Comparable<T>> implements ISort<T> {
             k++;
         }
     }
+
+    @Override
+    public void printSortName() {
+        System.out.println("Merge sorting");
+    }
 }

@@ -61,4 +61,8 @@ public class CountingSort {
         }
         System.arraycopy(sortedArray, 0, array, 0, array.length);
     }
+
+    public void printSortName() {
+        System.out.println("Counting sorting");
+    }
 }

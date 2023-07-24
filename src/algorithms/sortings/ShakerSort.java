@@ -17,6 +17,11 @@ public class ShakerSort<T extends Comparable<T>> implements ISort<T> {
         shakerSort(array);
     }
 
+    @Override
+    public void printSortName() {
+        System.out.println("Shaker sorting");
+    }
+
     private void shakerSort(ArrayList<T> array) {
         int left = 0;
         int right = array.size() - 1;

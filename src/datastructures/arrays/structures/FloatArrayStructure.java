@@ -21,7 +21,7 @@ public class FloatArrayStructure {
             this.array.add(randomFloat);
         }
 
-        return this.array;
+        return (ArrayList<Float>) this.array.clone();
     }
 
     public ArrayList<Float> generateSorted(int size, float valueFrom, float step) {
@@ -32,7 +32,7 @@ public class FloatArrayStructure {
             valueFrom += step;
         }
 
-        return array;
+        return (ArrayList<Float>) array.clone();
     }
 
     public ArrayList<Float> generateReversed(int size, float valueFrom, float step) {
@@ -43,7 +43,7 @@ public class FloatArrayStructure {
             valueFrom -= step;
         }
 
-        return array;
+        return (ArrayList<Float>) array.clone();
     }
 
     public ArrayList<Float> generateWithoutRepetitions(int length, float min, float max) {
@@ -68,7 +68,7 @@ public class FloatArrayStructure {
             array.add(element);
         }
 
-        return array;
+        return (ArrayList<Float>) array.clone();
     }
 
     public ArrayList<Float> generateWithRepetitions(int length, float min, float max) {
@@ -85,7 +85,7 @@ public class FloatArrayStructure {
             array.add(random);
         }
 
-        return array;
+        return (ArrayList<Float>) array.clone();
     }
 
     public ArrayList<Float> currentArray() {
@@ -93,7 +93,7 @@ public class FloatArrayStructure {
             throw new NullPointerException("Array was null!");
         }
 
-        return this.array;
+        return (ArrayList<Float>) this.array.clone();
     }
 }
 

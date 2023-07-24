@@ -1,56 +1,117 @@
-import algorithms.sortings.BubbleSort;
+import algorithms.sortings.*;
+import datastructures.arrays.IArray;
 import datastructures.arrays.IntArray;
-import datastructures.heaps.*;
-import datastructures.maps.Dictionary;
-import datastructures.maps.HashMapDH;
-import datastructures.trees.AVLTree;
-import datastructures.trees.RedBlackTree;
+import datastructures.arrays.structures.IntArrayStructure;
+import statistic.ArraySortCompare;
+
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        IntArray array = new IntArray();
-        array.generateRandom(20, 1, 100);
-        array.sort(new BubbleSort());
-        array.print();
+        ArrayList<IArray<Integer>> integerArrays = new ArrayList<>();
 
-        BinaryHeap<Integer> binHeap = new BinaryHeap<>(
-                new IntArray()
-                .generateRandom(20, 1, 100)
-                .shuffle()
-                .sort(new BubbleSort<Integer>())
-        );
-        System.out.println(binHeap.findMin());
+        System.out.println();
+        System.out.println("=================================");
+        System.out.println("RANDOM ARRAYS");
+        System.out.println("=================================");
+        System.out.println();
 
-        System.out.println("------");
+        IntArrayStructure arrayStructure = new IntArrayStructure();
+        arrayStructure.generateRandom(20000, -100, 100);
 
-        Dictionary<String, Integer> dictInt = new Dictionary<>();
-        dictInt.put("a", 2);
-        dictInt.put("b", 1);
-        dictInt.entrySet().forEach(i -> System.out.println(i.key + " " + i.value));
+        for (int i = 0; i < 11; i++) {
+            integerArrays.add(
+                    new IntArray(
+                            arrayStructure.currentArray()
+                    )
+            );
+        }
 
-        System.out.println("-----------");
+        ArraySortCompare<Integer> intArrayCompare = new ArraySortCompare<>(integerArrays);
 
-        AVLTree<Integer> tree = new AVLTree<>();
-        tree.insert(5);
-        tree.insert(3);
-        tree.insert(2);
-        tree.remove(3);
-        System.out.println(tree.find(2));
-        RedBlackTree<Integer> rb = new RedBlackTree<>();
-        rb.insert(5);
-        rb.insert(3);
-        rb.insert(2);
-        rb.remove(3);
-        System.out.println(rb.find(2));
-        TernaryHeap<Integer> heap = new TernaryHeap<>();
-        heap.insert(2);
-        heap.insert(5);
-        heap.insert(3);
-        heap.deleteMin();
-        HashMapDH<String, Integer> mapDH = new HashMapDH<>();
-        mapDH.put("a", 1);
-        mapDH.put("c", 3);
-        mapDH.put("b", 2);
-        mapDH.remove("c");
+        intArrayCompare.compareAndReport();
+
+        System.out.println();
+        System.out.println("=================================");
+        System.out.println("ARRAYS WITH REPETITIONS");
+        System.out.println("=================================");
+        System.out.println();
+
+        arrayStructure = new IntArrayStructure();
+        arrayStructure.generateWithRepetitions(20000, -100, 100);
+
+        for (int i = 0; i < 11; i++) {
+            integerArrays.add(
+                    new IntArray(
+                            arrayStructure.currentArray()
+                    )
+            );
+        }
+
+        intArrayCompare = new ArraySortCompare<>(integerArrays);
+
+        intArrayCompare.compareAndReport();
+        System.out.println();
+        System.out.println("=================================");
+        System.out.println("ARRAYS WITHOUT REPETITIONS");
+        System.out.println("=================================");
+        System.out.println();
+
+        arrayStructure = new IntArrayStructure();
+        arrayStructure.generateWithoutRepetitions(20000, -1000000000, 1000000000);
+
+        for (int i = 0; i < 11; i++) {
+            integerArrays.add(
+                    new IntArray(
+                            arrayStructure.currentArray()
+                    )
+            );
+        }
+
+        intArrayCompare = new ArraySortCompare<>(integerArrays);
+
+        intArrayCompare.compareAndReport();
+
+        System.out.println();
+        System.out.println("=================================");
+        System.out.println("SORTED ARRAYS REPETITIONS");
+        System.out.println("=================================");
+        System.out.println();
+
+        arrayStructure = new IntArrayStructure();
+        arrayStructure.generateSorted(20000, -100, 100);
+
+        for (int i = 0; i < 11; i++) {
+            integerArrays.add(
+                    new IntArray(
+                            arrayStructure.currentArray()
+                    )
+            );
+        }
+
+        intArrayCompare = new ArraySortCompare<>(integerArrays);
+
+        intArrayCompare.compareAndReport();
+
+        System.out.println();
+        System.out.println("=================================");
+        System.out.println("REVERSED ARRAYS REPETITIONS");
+        System.out.println("=================================");
+        System.out.println();
+
+        arrayStructure = new IntArrayStructure();
+        arrayStructure.generateReversed(20000, -100, 100);
+
+        for (int i = 0; i < 11; i++) {
+            integerArrays.add(
+                    new IntArray(
+                            arrayStructure.currentArray()
+                    )
+            );
+        }
+
+        intArrayCompare = new ArraySortCompare<>(integerArrays);
+
+        intArrayCompare.compareAndReport();
     }
 }
