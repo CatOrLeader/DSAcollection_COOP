@@ -8,25 +8,37 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class StringArray implements IArray<String>, Iterable<String> {
-    private ArrayList<String> array = new ArrayList<>();
+    private final ArrayList<String> array;
 
     public StringArray() {
-
+        array = new ArrayList<>();
     }
 
     public StringArray(String[] array) {
-        for (int i = 0; i < array.length; i++) {
-            this.array.add(array[i]);
+        this.array = new ArrayList<>();
+
+        for (String s : array) {
+            this.array.add(s);
         }
     }
 
-    public void generateRandom(int size, int length) {
+    public StringArray(ArrayList<String> array) {
+        this.array = new ArrayList<>();
+
+        for (String s : array) {
+            this.array.add(s);
+        }
+    }
+
+    public StringArray generateRandom(int size, int length) {
         this.clean();
 
         for (int i = 0; i < size; i++) {
             String randomString = generateRandomString(length);
             this.array.add(randomString);
         }
+
+        return this;
     }
 
     private String generateRandomString(int length) {
@@ -53,7 +65,7 @@ public class StringArray implements IArray<String>, Iterable<String> {
     }
 
     @Override
-    public StringArray sort(ISort sorting) {
+    public StringArray sort(ISort<String> sorting) {
         sorting.sort(this.array);
 
         return this;

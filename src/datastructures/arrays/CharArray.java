@@ -8,19 +8,29 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class CharArray implements IArray<Character>, Iterable<Character> {
-    private ArrayList<Character> array = new ArrayList<>();
+    private final ArrayList<Character> array;
 
     public CharArray() {
-
+        array = new ArrayList<>();
     }
 
     public CharArray(char[] array) {
-        for (int i = 0; i < array.length; i++) {
-            this.array.add(array[i]);
+        this.array = new ArrayList<>();
+
+        for (char c : array) {
+            this.array.add(c);
         }
     }
 
-    public void generateRandom(int size) {
+    public CharArray(ArrayList<Character> array) {
+        this.array = new ArrayList<>();
+
+        for (char c : array) {
+            this.array.add(c);
+        }
+    }
+
+    public CharArray generateRandom(int size) {
         this.clean();
 
         Random rnd = new Random();
@@ -28,6 +38,8 @@ public class CharArray implements IArray<Character>, Iterable<Character> {
             char randomChar = (char) (rnd.nextInt(26) + 'a');
             this.array.add(randomChar);
         }
+
+        return this;
     }
 
     @Override
@@ -42,7 +54,7 @@ public class CharArray implements IArray<Character>, Iterable<Character> {
     }
 
     @Override
-    public CharArray sort(ISort sorting) {
+    public CharArray sort(ISort<Character> sorting) {
         sorting.sort(this.array);
 
         return this;

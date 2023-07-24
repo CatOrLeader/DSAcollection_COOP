@@ -5,8 +5,12 @@ import java.util.Scanner;
 
 public class ShakerSort<T extends Comparable<T>> implements ISort<T> {
     public void sort(ArrayList<T> array) {
-        if (array == null || array.size() == 0) {
-            System.out.println("Array is null");
+        if (array == null){
+            throw new NullPointerException("The array was null!");
+        }
+
+        if (array.size() == 0) {
+            System.out.println("Array is empty");
             return;
         }
 

@@ -4,10 +4,15 @@ import java.util.ArrayList;
 
 public class BubbleSort<T extends Comparable<T>> implements ISort<T> {
     public void sort(ArrayList<T> array) {
-        if (array == null || array.size() == 0) {
-            System.out.println("Array is null");
+        if (array == null){
+            throw new NullPointerException("The array was null!");
+        }
+
+        if (array.size() == 0) {
+            System.out.println("Array is empty");
             return;
         }
+
         int n = array.size();
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {

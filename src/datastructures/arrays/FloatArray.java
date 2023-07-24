@@ -8,19 +8,29 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class FloatArray implements IArray<Float>, Iterable<Float> {
-    private ArrayList<Float> array = new ArrayList<>();
+    private final ArrayList<Float> array;
 
     public FloatArray() {
-
+        array = new ArrayList<>();
     }
 
     public FloatArray(float[] array) {
-        for (int i = 0; i < array.length; i++) {
-            this.array.add(array[i]);
+        this.array = new ArrayList<>();
+
+        for (float v : array) {
+            this.array.add(v);
         }
     }
 
-    public void generateRandom(int size, float valueFrom, float valueTo) {
+    public FloatArray(ArrayList<Float> array) {
+        this.array = new ArrayList<>();
+
+        for (float v : array) {
+            this.array.add(v);
+        }
+    }
+
+    public FloatArray generateRandom(int size, float valueFrom, float valueTo) {
         this.clean();
 
         for (int i = 0; i < size; i++) {
@@ -28,6 +38,8 @@ public class FloatArray implements IArray<Float>, Iterable<Float> {
             float randomFloat = valueFrom + rnd.nextFloat() * (valueTo - valueFrom);
             this.array.add(randomFloat);
         }
+
+        return this;
     }
 
     @Override
@@ -42,7 +54,7 @@ public class FloatArray implements IArray<Float>, Iterable<Float> {
     }
 
     @Override
-    public FloatArray sort(ISort sorting) {
+    public FloatArray sort(ISort<Float> sorting) {
         sorting.sort(this.array);
 
         return this;

@@ -4,15 +4,19 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class BogoSort<T extends Comparable<T>> implements ISort<T> {
-    private Random random;
+    private final Random random;
 
     public BogoSort() {
         random = new Random();
     }
 
     public void sort(ArrayList<T> array) {
-        if (array == null || array.size() == 0) {
-            System.out.println("Array is null");
+        if (array == null){
+            throw new NullPointerException("The array was null!");
+        }
+
+        if (array.size() == 0) {
+            System.out.println("Array is empty");
             return;
         }
 

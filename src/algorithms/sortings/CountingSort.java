@@ -32,10 +32,15 @@ public class CountingSort {
     }
 
     public void sort() {
-        if (array == null || array.length == 0) {
-            System.out.println("Array is null");
+        if (array == null){
+            throw new NullPointerException("The array was null!");
+        }
+
+        if (array.length == 0) {
+            System.out.println("Array is empty");
             return;
         }
+
         int max = array[0];
         for (int i = 1; i < array.length; i++) {
             if (array[i] > max) {

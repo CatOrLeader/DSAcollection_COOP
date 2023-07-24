@@ -8,25 +8,25 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class DoubleArray implements IArray<Double>, Iterable<Double> {
-    private ArrayList<Double> array = new ArrayList<>();
+    private final ArrayList<Double> array;
 
     public DoubleArray() {
-
+        array = new ArrayList<>();
     }
 
     public DoubleArray(double[] array) {
-        for (int i = 0; i < array.length; i++) {
-            this.array.add(array[i]);
+        this.array = new ArrayList<>();
+
+        for (double v : array) {
+            this.array.add(v);
         }
     }
 
-    public void generateRandom(int size, double valueFrom, double valueTo) {
-        this.clean();
+    public DoubleArray(ArrayList<Double> array) {
+        this.array = new ArrayList<>();
 
-        for (int i = 0; i < size; i++) {
-            Random rnd = new Random();
-            double randomDouble = valueFrom + rnd.nextDouble() * (valueTo - valueFrom);
-            this.array.add(randomDouble);
+        for (double v : array) {
+            this.array.add(v);
         }
     }
 
@@ -42,7 +42,7 @@ public class DoubleArray implements IArray<Double>, Iterable<Double> {
     }
 
     @Override
-    public DoubleArray sort(ISort sorting) {
+    public DoubleArray sort(ISort<Double> sorting) {
         sorting.sort(this.array);
 
         return this;

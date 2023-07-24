@@ -2,6 +2,7 @@ import algorithms.sortings.BubbleSort;
 import datastructures.arrays.IntArray;
 import datastructures.heaps.BinaryHeap;
 import datastructures.maps.Dictionary;
+import datastructures.trees.AVLTree;
 
 public class Main {
     public static void main(String[] args) {
@@ -27,7 +28,9 @@ public class Main {
 
         System.out.println("-----------");
 
-
-
+        AVLTree<Integer> tree = new AVLTree<>();
+        tree.insert(3);
+        tree.insert(5);
+        tree.insert(6);
     }
 }

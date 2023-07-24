@@ -8,15 +8,25 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class IntArray implements IArray<Integer>, Iterable<Integer> {
-    private ArrayList<Integer> array = new ArrayList<>();
+    private final ArrayList<Integer> array;
 
     public IntArray() {
-
+        array = new ArrayList<>();
     }
 
     public IntArray(int[] array) {
-        for (int i = 0; i < array.length; i++) {
-            this.array.add(array[i]);
+        this.array = new ArrayList<>();
+
+        for (int j : array) {
+            this.array.add(j);
+        }
+    }
+
+    public IntArray(ArrayList<Integer> array) {
+        this.array = new ArrayList<>();
+
+        for (int j : array) {
+            this.array.add(j);
         }
     }
 
@@ -49,7 +59,7 @@ public class IntArray implements IArray<Integer>, Iterable<Integer> {
     }
 
     @Override
-    public IntArray sort(ISort sorting) {
+    public IntArray sort(ISort<Integer> sorting) {
         sorting.sort(this.array);
         return this;
     }
