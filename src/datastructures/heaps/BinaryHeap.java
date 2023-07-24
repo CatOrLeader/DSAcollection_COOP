@@ -56,10 +56,6 @@ public class BinaryHeap<T extends Comparable<T>> implements Heap<T> {
         heap.clear();
     }
 
-    private void printElement(T element) {
-        System.out.print(element + " ");
-    }
-
     private void heapifyUp(int index) {
         int parent = (index - 1) / 2;
         while (index > 0 && heap.get(index).compareTo(heap.get(parent)) < 0) {
@@ -90,5 +86,17 @@ public class BinaryHeap<T extends Comparable<T>> implements Heap<T> {
         T temp = heap.get(i);
         heap.set(i, heap.get(j));
         heap.set(j, temp);
+    }
+
+    @Override
+    public void print() {
+        for (T element : heap) {
+            printElement(element);
+        }
+        System.out.println();
+    }
+
+    private void printElement(T element) {
+        System.out.print(element + " ");
     }
 }

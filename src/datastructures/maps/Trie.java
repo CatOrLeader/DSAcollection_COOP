@@ -4,8 +4,9 @@ import java.util.*;
 
 public class Trie implements MapADT<String, Integer> {
     private TrieNode root;
+    private final TrieNode emptyNode;
 
-    private static class TrieNode { //use just as a struct
+    private class TrieNode { //use just as a struct
         Map<Character, TrieNode> children;
         int value;
 
@@ -16,7 +17,8 @@ public class Trie implements MapADT<String, Integer> {
     }
 
     public Trie() {
-        root = new TrieNode();
+        emptyNode = new TrieNode();
+        root = emptyNode;
     }
 
     @Override
@@ -40,15 +42,15 @@ public class Trie implements MapADT<String, Integer> {
     @Override
     public Integer find(String key) {
         TrieNode node = findNode(key);
-        return (node != null && node.value != 0) ? node.value : null;
+        return (node != emptyNode && node.value != 0) ? node.value : emptyNode.value;
     }
 
     private TrieNode findNode(String key) {
         TrieNode current = root;
         for (char c : key.toCharArray()) {
             current = current.children.get(c);
-            if (current == null) {
-                return null;
+            if (current == emptyNode) {
+                return emptyNode;
             }
         }
         return current;
@@ -66,7 +68,7 @@ public class Trie implements MapADT<String, Integer> {
     @Override
     public void remove(String key) {
         TrieNode node = findNode(key);
-        if (node != null && node.value != 0) {
+        if (node != emptyNode && node.value != 0) {
             node.value = 0;
         }
     }

@@ -1,7 +1,10 @@
 import algorithms.sortings.BubbleSort;
 import datastructures.arrays.IntArray;
-import datastructures.heaps.BinaryHeap;
+import datastructures.heaps.*;
 import datastructures.maps.Dictionary;
+import datastructures.maps.HashMapDH;
+import datastructures.trees.AVLTree;
+import datastructures.trees.RedBlackTree;
 
 public class Main {
     public static void main(String[] args) {
@@ -27,7 +30,27 @@ public class Main {
 
         System.out.println("-----------");
 
-
-
+        AVLTree<Integer> tree = new AVLTree<>();
+        tree.insert(5);
+        tree.insert(3);
+        tree.insert(2);
+        tree.remove(3);
+        System.out.println(tree.find(2));
+        RedBlackTree<Integer> rb = new RedBlackTree<>();
+        rb.insert(5);
+        rb.insert(3);
+        rb.insert(2);
+        rb.remove(3);
+        System.out.println(rb.find(2));
+        TernaryHeap<Integer> heap = new TernaryHeap<>();
+        heap.insert(2);
+        heap.insert(5);
+        heap.insert(3);
+        heap.deleteMin();
+        HashMapDH<String, Integer> mapDH = new HashMapDH<>();
+        mapDH.put("a", 1);
+        mapDH.put("c", 3);
+        mapDH.put("b", 2);
+        mapDH.remove("c");
     }
 }

@@ -13,5 +13,6 @@ public interface Heap<T extends Comparable<T>> {
     int size();
 
     void clear();
+    void print();
 }
 

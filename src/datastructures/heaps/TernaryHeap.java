@@ -87,4 +87,32 @@ public class TernaryHeap<T extends Comparable<T>> implements Heap<T> {
         heap.set(i, heap.get(j));
         heap.set(j, temp);
     }
+
+    @Override
+    public void print() {
+        if (isEmpty()) {
+            System.out.println("Heap is empty.");
+        } else {
+            printHeap(0, 0);
+        }
+    }
+
+    private void printHeap(int index, int level) {
+        if (index >= heap.size()) {
+            return;
+        }
+
+        printHeap(3 * index + 1, level + 1);
+        printIndent(level);
+        System.out.println(heap.get(index));
+
+        printHeap(3 * index + 2, level + 1);
+        printHeap(3 * index + 3, level + 1);
+    }
+
+    private void printIndent(int level) {
+        for (int i = 0; i < level; i++) {
+            System.out.print("    ");
+        }
+    }
 }

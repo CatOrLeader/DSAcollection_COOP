@@ -8,13 +8,19 @@ import java.util.List;
 public class BinomialHeap<T extends Comparable<T>> implements Heap<T> {
 
     private ArrayList<BinomialTree<T>> trees;
+    private final T minValue;
+    private final BinomialHeap.BinomialTree<T> missingTree;
 
     public BinomialHeap() {
         trees = new ArrayList<>();
+        minValue = null;
+        missingTree = new BinomialTree<>(null);
     }
 
     public BinomialHeap(IArray<T> array) {
         trees = new ArrayList<>();
+        minValue = null;
+        missingTree = new BinomialTree<>(null);
         for (T i: array) {
             insert(i);
         }
@@ -29,10 +35,10 @@ public class BinomialHeap<T extends Comparable<T>> implements Heap<T> {
         if (isEmpty()) {
             throw new IllegalStateException("Empty Heap!");
         }
-        T min = null;
+        T min = minValue;
         for (BinomialTree<T> tree : trees) {
-            if (tree != null) {
-                if (min == null || tree.root().compareTo(min) < 0) {
+            if (tree != missingTree) {
+                if (min == minValue || tree.root().compareTo(min) < 0) {
                     min = tree.root();
                 }
             }
@@ -47,7 +53,7 @@ public class BinomialHeap<T extends Comparable<T>> implements Heap<T> {
         int minIndex = minIndex();
         BinomialTree<T> minTree = trees.get(minIndex);
         T min = minTree.root();
-        trees.set(minIndex, null);
+        trees.set(minIndex, missingTree);
         BinomialHeap<T> newHeap = new BinomialHeap<>();
         newHeap.trees.ensureCapacity(minTree.degree());
         for (BinomialTree<T> child : minTree.children()) {
@@ -64,7 +70,7 @@ public class BinomialHeap<T extends Comparable<T>> implements Heap<T> {
     public int size() {
         int count = 0;
         for (BinomialTree<T> tree : trees) {
-            if (tree != null) {
+            if (tree != missingTree) {
                 count += (int) Math.pow(2, tree.degree());
             }
         }
@@ -77,9 +83,9 @@ public class BinomialHeap<T extends Comparable<T>> implements Heap<T> {
 
     private void mergeTree(BinomialTree<T> tree) {
         int index = tree.degree();
-        while (index < trees.size() && trees.get(index) != null) {
+        while (index < trees.size() && trees.get(index) != missingTree) {
             tree = tree.merge(trees.get(index));
-            trees.set(index, null);
+            trees.set(index, missingTree);
             index++;
         }
         if (index == trees.size()) {
@@ -113,11 +119,11 @@ public class BinomialHeap<T extends Comparable<T>> implements Heap<T> {
 
     private int minIndex() {
         int minIndex = -1;
-        T min = null;
+        T min = minValue;
         for (int i = 0; i < trees.size(); i++) {
             BinomialTree<T> tree = trees.get(i);
-            if (tree != null) {
-                if (min == null || tree.root().compareTo(min) < 0) {
+            if (tree != missingTree) {
+                if (min == minValue || tree.root().compareTo(min) < 0) {
                     min = tree.root();
                     minIndex = i;
                 }
@@ -127,8 +133,8 @@ public class BinomialHeap<T extends Comparable<T>> implements Heap<T> {
     }
 
     private static class BinomialTree<T extends Comparable<T>> {
-        private T root;
-        private List<BinomialTree<T>> children;
+        private final T root;
+        private final List<BinomialTree<T>> children;
         public BinomialTree(T root) {
             this.root = root;
             this.children = new ArrayList<>();
@@ -154,6 +160,24 @@ public class BinomialHeap<T extends Comparable<T>> implements Heap<T> {
                 other.children.add(this);
                 return other;
             }
+        }
+    }
+
+    @Override
+    public void print() {
+        for (BinomialTree<T> tree : trees) {
+            if (tree != missingTree) {
+                System.out.print("Degree " + tree.degree() + ": ");
+                printTree(tree.root(), tree.children());
+                System.out.println();
+            }
+        }
+    }
+
+    private void printTree(T root, List<BinomialTree<T>> children) {
+        System.out.print(root + " ");
+        for (BinomialTree<T> child : children) {
+            printTree(child.root(), child.children());
         }
     }
 }

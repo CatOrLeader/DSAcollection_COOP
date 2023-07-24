@@ -101,4 +101,26 @@ public class DHeap<T extends Comparable<T>> implements Heap<T> {
         heap.set(i, heap.get(j));
         heap.set(j, temp);
     }
+
+    @Override
+    public void print() {
+        printHeap(0, 0);
+    }
+
+    private void printHeap(int index, int level) {
+        if (index >= heap.size()) {
+            return;
+        }
+
+        for (int i = 0; i < level; i++) {
+            System.out.print("  ");
+        }
+
+        System.out.println(heap.get(index));
+
+        int firstChild = d * index + 1;
+        for (int i = 0; i < d; i++) {
+            printHeap(firstChild + i, level + 1);
+        }
+    }
 }

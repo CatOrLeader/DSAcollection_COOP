@@ -1,6 +1,7 @@
 package datastructures.maps;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 /**
  * The main class, which implements the functionality of HashMap through Open Addressing with Linear Probing.
@@ -12,10 +13,15 @@ public class HashMapLP<K, V> implements MapADT<K, V> {
     private final int maxHashtableSize = 100;
     private int size;
     private KeyValuePair<K, V>[] hashMap;
+    private final KeyValuePair<K, V> emptyPair;
 
     public HashMapLP() {
         size = maxHashtableSize;
+        emptyPair = new KeyValuePair<>(null, null);
         hashMap = new KeyValuePair[size];
+        for (int i = 0; i < size; ++i) {
+            hashMap[i] = emptyPair;
+        }
     }
 
     /**
@@ -54,16 +60,15 @@ public class HashMapLP<K, V> implements MapADT<K, V> {
         for (int i = 0; i < size(); i++) {
             int currentIndex = (index + i) % size();
 
-            if (hashMap[currentIndex] == null) {
-                return null;
+            if (hashMap[currentIndex] == emptyPair) {
+                throw new NoSuchElementException("No value with such key");
             }
 
             if (hashMap[currentIndex].key.equals(key)) {
                 return hashMap[currentIndex].value;
             }
         }
-
-        return null;
+        throw new NoSuchElementException("No value with such key");
     }
 
     /**
@@ -81,7 +86,7 @@ public class HashMapLP<K, V> implements MapADT<K, V> {
         for (int i = 0; i < size(); i++) {
             int currentIndex = (index + i) % size();
 
-            if (hashMap[currentIndex] == null) {
+            if (hashMap[currentIndex] == emptyPair) {
                 hashMap[currentIndex] = new KeyValuePair<>(key, value);
                 return;
             }
@@ -100,12 +105,12 @@ public class HashMapLP<K, V> implements MapADT<K, V> {
         for (int i = 0; i < size(); i++) {
             int currentIndex = (index + i) % size();
 
-            if (hashMap[currentIndex] == null) {
+            if (hashMap[currentIndex] == emptyPair) {
                 return;
             }
 
             if (hashMap[currentIndex].key.equals(key)) {
-                hashMap[currentIndex] = null;
+                hashMap[currentIndex] = emptyPair;
                 return;
             }
         }
@@ -121,7 +126,7 @@ public class HashMapLP<K, V> implements MapADT<K, V> {
         ArrayList<K> keys = new ArrayList<>();
 
         for (KeyValuePair<K, V> entry : hashMap) {
-            if (entry != null) {
+            if (entry != emptyPair) {
                 keys.add(entry.key);
             }
         }
@@ -139,7 +144,7 @@ public class HashMapLP<K, V> implements MapADT<K, V> {
         ArrayList<V> values = new ArrayList<>();
 
         for (KeyValuePair<K, V> entry : hashMap) {
-            if (entry != null) {
+            if (entry != emptyPair) {
                 values.add(entry.value);
             }
         }
@@ -157,7 +162,7 @@ public class HashMapLP<K, V> implements MapADT<K, V> {
         ArrayList<KeyValuePair<K, V>> entries = new ArrayList<>();
 
         for (KeyValuePair<K, V> entry : hashMap) {
-            if (entry != null) {
+            if (entry != emptyPair) {
                 entries.add(entry);
             }
         }

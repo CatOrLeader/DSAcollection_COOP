@@ -7,11 +7,13 @@ public class HashMapSC<K, V> implements MapADT<K, V> {
     private int mapSize;
     private int capacity;
     private List<KeyValuePair<K, V>>[] hashTable;
+    private final KeyValuePair<K, V> emptyPair;
 
     public HashMapSC() {
         this.capacity = 16;
         this.mapSize = 0;
         this.hashTable = new List[capacity];
+        emptyPair = new KeyValuePair<>(null, null);
         for (int i = 0; i < capacity; i++) {
             this.hashTable[i] = new LinkedList<>();
         }
@@ -21,6 +23,7 @@ public class HashMapSC<K, V> implements MapADT<K, V> {
         this.capacity = capacity;
         this.mapSize = 0;
         this.hashTable = new List[capacity];
+        emptyPair = new KeyValuePair<>(null, null);
         for (int i = 0; i < capacity; i++) {
             this.hashTable[i] = new LinkedList<>();
         }
@@ -34,7 +37,7 @@ public class HashMapSC<K, V> implements MapADT<K, V> {
                 return myKeyValuePair;
             }
         }
-        return new KeyValuePair<>(null, null);
+        return emptyPair;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class HashMapSC<K, V> implements MapADT<K, V> {
     @Override
     public V find(K key) {
         KeyValuePair<K, V> entry = entry(key);
-        if (entry.key != null) {
+        if (entry != emptyPair) {
             return entry.value;
         }
         return null;
@@ -59,7 +62,7 @@ public class HashMapSC<K, V> implements MapADT<K, V> {
     @Override
     public void put(K key, V value) {
         KeyValuePair<K, V> entry = entry(key);
-        if (entry.key != null) {
+        if (entry != emptyPair) {
             entry.value = value;
         } else {
             int hash = key.hashCode() % this.capacity;

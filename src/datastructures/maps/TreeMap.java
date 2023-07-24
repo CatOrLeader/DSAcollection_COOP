@@ -4,6 +4,7 @@ import java.util.*;
 public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
     private Node root;
     private int size;
+    private final Node emptyPair;
 
     private class Node { //use just as a struct
         K key;
@@ -14,14 +15,15 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
         Node(K key, V value) {
             this.key = key;
             this.value = value;
-            this.left = null;
-            this.right = null;
+            this.left = emptyPair;
+            this.right = emptyPair;
             this.height = 1;
         }
     }
 
     public TreeMap() {
-        root = null;
+        emptyPair = new Node(null, null);
+        root = emptyPair;
         size = 0;
     }
 
@@ -38,11 +40,11 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
     @Override
     public V find(K key) {
         Node node = findNode(root, key);
-        return (node != null) ? node.value : null;
+        return (node != emptyPair) ? node.value : emptyPair.value;
     }
 
     private Node findNode(Node node, K key) {
-        if (node == null || key.equals(node.key)) {
+        if (node == emptyPair || key.equals(node.key)) {
             return node;
         }
         int cmp = key.compareTo(node.key);
@@ -59,7 +61,7 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
     }
 
     private Node putNode(Node node, K key, V value) {
-        if (node == null) {
+        if (node == emptyPair) {
             size++;
             return new Node(key, value);
         }
@@ -96,8 +98,8 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
     }
 
     private Node removeNode(Node node, K key) {
-        if (node == null) {
-            return null;
+        if (node == emptyPair) {
+            return emptyPair;
         }
         int cmp = key.compareTo(node.key);
         if (cmp < 0) {
@@ -105,10 +107,10 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
         } else if (cmp > 0) {
             node.right = removeNode(node.right, key);
         } else {
-            if (node.left == null || node.right == null) {
-                Node child = (node.left != null) ? node.left : node.right;
-                if (child == null) {
-                    return null;
+            if (node.left == emptyPair || node.right == emptyPair) {
+                Node child = (node.left != emptyPair) ? node.left : node.right;
+                if (child == emptyPair) {
+                    return emptyPair;
                 }
                 node = child;
             } else {
@@ -118,8 +120,8 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
                 node.right = removeNode(node.right, successor.key);
             }
         }
-        if (node == null) {
-            return null;
+        if (node == emptyPair) {
+            return emptyPair;
         }
         updateHeight(node);
         int balance = getBalance(node);
@@ -161,7 +163,7 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
     }
 
     private int getHeight(Node node) {
-        if (node == null) {
+        if (node == emptyPair) {
             return 0;
         }
         return node.height;
@@ -172,14 +174,14 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
     }
 
     private int getBalance(Node node) {
-        if (node == null) {
+        if (node == emptyPair) {
             return 0;
         }
         return getHeight(node.left) - getHeight(node.right);
     }
 
     private Node getMinimumNode(Node node) {
-        if (node.left == null) {
+        if (node.left == emptyPair) {
             return node;
         }
         return getMinimumNode(node.left);
@@ -193,7 +195,7 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
     }
 
     private void inorderTraversal(Node node, List<K> keys) {
-        if (node != null) {
+        if (node != emptyPair) {
             inorderTraversal(node.left, keys);
             keys.add(node.key);
             inorderTraversal(node.right, keys);
@@ -208,7 +210,7 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
     }
 
     private void inorderValueTraversal(Node node, List<V> values) {
-        if (node != null) {
+        if (node != emptyPair) {
             inorderValueTraversal(node.left, values);
             values.add(node.value);
             inorderValueTraversal(node.right, values);
@@ -223,7 +225,7 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
     }
 
     private void inorderEntryTraversal(Node node, List<KeyValuePair<K, V>> entries) {
-        if (node != null) {
+        if (node != emptyPair) {
             inorderEntryTraversal(node.left, entries);
             entries.add(new KeyValuePair<>(node.key, node.value));
             inorderEntryTraversal(node.right, entries);
@@ -238,4 +240,3 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
         }
     }
 }
-

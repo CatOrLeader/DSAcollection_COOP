@@ -9,6 +9,7 @@ public class PairingHeap<T extends Comparable<T>> implements Heap<T> {
 
     private Node root;
     private int size;
+    private final Node leafNode;
 
     private class Node { //use just as a struct
         T key;
@@ -17,18 +18,20 @@ public class PairingHeap<T extends Comparable<T>> implements Heap<T> {
 
         Node(T key) {
             this.key = key;
-            this.leftChild = null;
-            this.nextSibling = null;
+            this.leftChild = leafNode;
+            this.nextSibling = leafNode;
         }
     }
 
     public PairingHeap() {
-        this.root = null;
+        leafNode = new Node(null);
+        this.root = leafNode;
         this.size = 0;
     }
 
     public PairingHeap(IArray<T> array) {
-        this.root = null;
+        leafNode = new Node(null);
+        this.root = leafNode;
         this.size = 0;
         for (T i: array) {
             insert(i);
@@ -71,15 +74,15 @@ public class PairingHeap<T extends Comparable<T>> implements Heap<T> {
     }
 
     public void clear() {
-        root = null;
+        root = leafNode;
         size = 0;
     }
 
     private Node merge(Node first, Node second) {
-        if (first == null) {
+        if (first == leafNode) {
             return second;
         }
-        if (second == null) {
+        if (second == leafNode) {
             return first;
         }
         if (first.key.compareTo(second.key) <= 0) {
@@ -94,16 +97,16 @@ public class PairingHeap<T extends Comparable<T>> implements Heap<T> {
     }
 
     private Node mergePairs(Node start) {
-        if (start == null || start.nextSibling == null) {
+        if (start == leafNode || start.nextSibling == leafNode) {
             return start;
         }
         Queue<Node> queue = new LinkedList<>();
-        while (start != null) {
+        while (start != leafNode) {
             Node first = start;
             Node second = start.nextSibling;
             start = start.nextSibling.nextSibling;
-            first.nextSibling = null;
-            second.nextSibling = null;
+            first.nextSibling = leafNode;
+            second.nextSibling = leafNode;
             queue.add(merge(first, second));
         }
         Node result = queue.poll();
@@ -111,5 +114,30 @@ public class PairingHeap<T extends Comparable<T>> implements Heap<T> {
             result = merge(result, queue.poll());
         }
         return result;
+    }
+
+    @Override
+    public void print() {
+        if (isEmpty()) {
+            System.out.println("Empty Heap!");
+        } else {
+            printHeap(root, 0);
+        }
+    }
+
+    private void printHeap(Node node, int level) {
+        if (node == leafNode) {
+            return;
+        }
+
+        printHeap(node.leftChild, level + 1);
+
+        for (int i = 0; i < level; i++) {
+            System.out.print("    ");
+        }
+
+        System.out.println(node.key);
+
+        printHeap(node.nextSibling, level);
     }
 }
