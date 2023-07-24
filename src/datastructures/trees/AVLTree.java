@@ -1,6 +1,6 @@
 package datastructures.trees;
 
-class AVLTree<T extends Comparable<T>> {
+public class AVLTree<T extends Comparable<T>> {
     private Node root;
     private final Node leafNode;
 
@@ -14,8 +14,8 @@ class AVLTree<T extends Comparable<T>> {
      * Worst case time complexity: O(1)
      */
     public int height(Node node) {
-        if (node == leafNode) { //todo
-            throw new NullPointerException("Node is null");
+        if (node == leafNode) {
+            return 0;
         }
         return node.height;
     }
@@ -108,7 +108,7 @@ class AVLTree<T extends Comparable<T>> {
      */
     private Node remove(Node root, T key) {
         if (root == leafNode) {
-            throw new NullPointerException("Root node is null");
+            return leafNode;
         }
         if (key.compareTo(root.key) < 0) {
             root.left = remove(root.left, key);
@@ -117,7 +117,7 @@ class AVLTree<T extends Comparable<T>> {
         } else {
             if (root.left == leafNode || root.right == leafNode) {
                 Node temp;
-                if (null == root.left) {
+                if (leafNode == root.left) {
                     temp = root.right;
                 } else {
                     temp = root.left;
@@ -130,7 +130,7 @@ class AVLTree<T extends Comparable<T>> {
             }
         }
         if (root == leafNode) {
-            throw new NullPointerException("Root node is null");
+            return leafNode;
         }
         root.height = Math.max(height(root.left), height(root.right)) + 1;
         int balance = balance(root);
@@ -165,6 +165,9 @@ class AVLTree<T extends Comparable<T>> {
             } else {
                 curNode = curNode.right;
             }
+        }
+        if (curNode.key == null) {
+            throw new NullPointerException("Node with key " + key + " not found");
         }
         return curNode;
     }

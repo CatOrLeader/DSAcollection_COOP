@@ -12,14 +12,16 @@ import java.util.Objects;
  * 5) For each node: is the same number of black nodes
  * @param <T>
  */
-class RedBlackTree<T extends Comparable<T>> {
+public class RedBlackTree<T extends Comparable<T>> {
     /**
      * The root of the RBT
      */
     private Node root;
+    private final Node leafNode;
 
     public RedBlackTree() {
-        root = null;
+        leafNode = new Node(null);
+        root = leafNode;
     }
 
     enum Colour {
@@ -28,49 +30,46 @@ class RedBlackTree<T extends Comparable<T>> {
     }
 
     class Node { //use just as a struct
-        protected T key;
-        protected Colour colour;
+        public T key;
+        public Colour colour;
 
-        public Node leftChild;
-        public Node rightChild;
+        public Node left;
+        public Node right;
         public Node parent;
 
         Node(T key) {
             this.key = key;
             colour = Colour.RED;
-
-            leftChild = null;
-            rightChild = null;
-            parent = null;
+            left = leafNode;
+            right = leafNode;
+            parent = leafNode;
         }
 
         protected boolean hasChildRed() {
-            return  (leftChild != null && leftChild.colour == Colour.RED)
+            return  (left != leafNode && left.colour == Colour.RED)
                     ||
-                    (rightChild != null && rightChild.colour == Colour.RED);
+                    (right != leafNode && right.colour == Colour.RED);
         }
 
-        protected boolean isLeftChild() {
-            return parent.leftChild == this;
+        protected boolean getLeft() {
+            return parent.left == this;
         }
 
         protected Node sibling() {
-            if (parent == null) {
-                return null;
+            if (parent == leafNode) {
+                return leafNode;
             }
-
-            if (isLeftChild()) {
-                return parent.rightChild;
+            if (getLeft()) {
+                return parent.right;
             }
-
-            return parent.leftChild;
+            return parent.left;
         }
         protected void replaceWithNodeBelow(Node newParent) {
-            if (parent != null) {
-                if (isLeftChild()) {
-                    parent.leftChild = newParent;
+            if (parent != leafNode) {
+                if (getLeft()) {
+                    parent.left = newParent;
                 } else {
-                    parent.rightChild = newParent;
+                    parent.right = newParent;
                 }
             }
             newParent.parent = parent;
@@ -80,35 +79,35 @@ class RedBlackTree<T extends Comparable<T>> {
 
     // Rotate right by node
     private Node turnRight(Node node) {
-        Node newParent = node.leftChild;
+        Node newParent = node.left;
 
         if (node == root) {
             root = newParent;
         }
 
         node.replaceWithNodeBelow(newParent);
-        node.leftChild = newParent.rightChild;
-        if (newParent.rightChild != null) {
-            newParent.rightChild.parent = node;
+        node.left = newParent.right;
+        if (newParent.right != leafNode) {
+            newParent.right.parent = node;
         }
-        newParent.rightChild = node;
+        newParent.right = node;
         return newParent;
     }
 
     // Rotate left by node
     private Node turnLeft(Node node) {
-        Node newParent = node.rightChild;
+        Node newParent = node.right;
 
         if (node == root) {
             root = newParent;
         }
 
         node.replaceWithNodeBelow(newParent);
-        node.rightChild = newParent.leftChild;
-        if (newParent.leftChild != null) {
-            newParent.leftChild.parent = node;
+        node.right = newParent.left;
+        if (newParent.left != leafNode) {
+            newParent.left.parent = node;
         }
-        newParent.leftChild = node;
+        newParent.left = node;
         return newParent;
     }
 
@@ -118,13 +117,12 @@ class RedBlackTree<T extends Comparable<T>> {
      * @param key the data you want to include in RBT
      */
     public void insert(T key) {
-        if (root == null) {
+        if (root == leafNode) {
             root = new Node(key);
             root.colour = Colour.BLACK;
-            return;
+        } else {
+            root = insertionStep(root, key);
         }
-
-        root = insertionStep(root, key);
     }
 
     private boolean l = false;
@@ -134,23 +132,23 @@ class RedBlackTree<T extends Comparable<T>> {
     private Node insertionStep(Node curRoot, T key) {
         boolean problemRR = false;
 
-        if (curRoot == null) {
+        if (curRoot == leafNode) {
             return new Node(key);
         } else if (key.compareTo(curRoot.key) < 0) {
-            curRoot.leftChild = insertionStep(curRoot.leftChild, key);
-            curRoot.leftChild.parent = curRoot;
+            curRoot.left = insertionStep(curRoot.left, key);
+            curRoot.left.parent = curRoot;
 
             if (curRoot != root) {
-                if (curRoot.colour == Colour.RED && curRoot.colour == curRoot.leftChild.colour) {
+                if (curRoot.colour == Colour.RED && curRoot.colour == curRoot.left.colour) {
                     problemRR = true;
                 }
             }
         } else {
-            curRoot.rightChild = insertionStep(curRoot.rightChild, key);
-            curRoot.rightChild.parent = curRoot;
+            curRoot.right = insertionStep(curRoot.right, key);
+            curRoot.right.parent = curRoot;
 
             if (curRoot != root) {
-                if (curRoot.colour == Colour.RED && curRoot.colour == curRoot.rightChild.colour) {
+                if (curRoot.colour == Colour.RED && curRoot.colour == curRoot.right.colour) {
                     problemRR = true;
                 }
             }
@@ -158,45 +156,45 @@ class RedBlackTree<T extends Comparable<T>> {
 
         if (this.l) {
             curRoot = turnLeft(curRoot);
-            curRoot.leftChild.colour = Colour.RED;
+            curRoot.left.colour = Colour.RED;
             curRoot.colour = Colour.BLACK;
             this.l = false;
         } else if (this.r) {
             curRoot = turnRight(curRoot);
-            curRoot.rightChild.colour = Colour.RED;
+            curRoot.right.colour = Colour.RED;
             curRoot.colour = Colour.BLACK;
             this.r = false;
         } else if (this.rl) {
-            curRoot.rightChild = turnRight(curRoot.rightChild);
-            curRoot.rightChild.parent = curRoot;
+            curRoot.right = turnRight(curRoot.right);
+            curRoot.right.parent = curRoot;
             curRoot = turnLeft(curRoot);
             curRoot.colour = Colour.BLACK;
-            curRoot.leftChild.colour = Colour.RED;
+            curRoot.left.colour = Colour.RED;
             this.rl = false;
         } else if (this.lr) {
-            curRoot.leftChild = turnLeft(curRoot.leftChild);
-            curRoot.leftChild.parent = curRoot;
+            curRoot.left = turnLeft(curRoot.left);
+            curRoot.left.parent = curRoot;
             curRoot = turnRight(curRoot);
             curRoot.colour = Colour.BLACK;
-            curRoot.rightChild.colour = Colour.RED;
+            curRoot.right.colour = Colour.RED;
             this.lr = false;
         }
 
         int whichChild = -1;
         if (problemRR) {
-            if (curRoot.parent.rightChild == curRoot) {
+            if (curRoot.parent.right == curRoot) {
                 whichChild = 0;
-            } else if (curRoot.parent.leftChild == curRoot) {
+            } else if (curRoot.parent.left == curRoot) {
                 whichChild = 1;
             }
 
             switch (whichChild) {
                 case 0 ->
                 {
-                    if (curRoot.sibling() == null || curRoot.sibling().colour == Colour.BLACK) {
-                        if (curRoot.leftChild != null && curRoot.leftChild.colour == Colour.RED) {
+                    if (curRoot.sibling() == leafNode || curRoot.sibling().colour == Colour.BLACK) {
+                        if (curRoot.left != leafNode && curRoot.left.colour == Colour.RED) {
                             this.rl = true;
-                        } else if (curRoot.rightChild != null && curRoot.rightChild.colour == Colour.RED) {
+                        } else if (curRoot.right != leafNode && curRoot.right.colour == Colour.RED) {
                             this.l = true;
                         }
                     } else {
@@ -209,10 +207,10 @@ class RedBlackTree<T extends Comparable<T>> {
                 }
                 case 1 ->
                 {
-                    if (curRoot.sibling() == null || curRoot.sibling().colour == Colour.BLACK) {
-                        if (curRoot.leftChild != null && curRoot.leftChild.colour == Colour.RED) {
+                    if (curRoot.sibling() == leafNode || curRoot.sibling().colour == Colour.BLACK) {
+                        if (curRoot.left != leafNode && curRoot.left.colour == Colour.RED) {
                             this.r = true;
-                        } else if (curRoot.rightChild != null && curRoot.rightChild.colour == Colour.RED) {
+                        } else if (curRoot.right != leafNode && curRoot.right.colour == Colour.RED) {
                             this.lr = true;
                         }
                     } else {
@@ -238,26 +236,30 @@ class RedBlackTree<T extends Comparable<T>> {
 
     // Perform an ordinary replacement according to BST rules
     protected Node replaceBST(Node del) {
-        if (del == null) {
+        if (del == leafNode) {
             throw new NullPointerException("Node is null");
         }
 
         int numOfChildren = 0;
-        if (del.leftChild != null) numOfChildren++;
-        if (del.rightChild != null) numOfChildren++;
+        if (del.left != leafNode) {
+            numOfChildren++;
+        }
+        if (del.right != leafNode) {
+            numOfChildren++;
+        }
 
         // Case 1: leaf
         if (numOfChildren == 0) {
-            return null;
+            return leafNode;
         }
 
         // Case 2: one child
         if (numOfChildren == 1) {
-            return Objects.requireNonNullElseGet(del.leftChild, () -> del.rightChild);
+            return Objects.requireNonNullElseGet(del.left, () -> del.right);
         }
 
         // Case 3: two children
-        return predBelow(del.leftChild);
+        return predBelow(del.left);
     }
 
     protected void fixBLACK2(Node curRoot) {
@@ -266,13 +268,13 @@ class RedBlackTree<T extends Comparable<T>> {
         }
         Node sibling = curRoot.sibling();
         Node parent = curRoot.parent;
-        if (sibling == null) {
+        if (sibling == leafNode) {
             fixBLACK2(parent);
         } else {
             if (sibling.colour == Colour.RED) {
                 parent.colour = Colour.RED;
                 sibling.colour = Colour.BLACK;
-                if (sibling.isLeftChild()) {
+                if (sibling.getLeft()) {
                     turnRight(parent);
                 } else {
                     turnLeft(parent);
@@ -280,23 +282,23 @@ class RedBlackTree<T extends Comparable<T>> {
                 fixBLACK2(curRoot);
             } else {
                 if (sibling.hasChildRed()) {
-                    if (sibling.leftChild != null && sibling.leftChild.colour == Colour.RED) {
-                        if (sibling.isLeftChild()) {
-                            sibling.leftChild.colour = sibling.colour;
+                    if (sibling.left != leafNode && sibling.left.colour == Colour.RED) {
+                        if (sibling.getLeft()) {
+                            sibling.left.colour = sibling.colour;
                             sibling.colour = parent.colour;
                             turnRight(parent);
                         } else {
-                            sibling.leftChild.colour = parent.colour;
+                            sibling.left.colour = parent.colour;
                             turnRight(sibling);
                             turnLeft(parent);
                         }
                     } else {
-                        if (sibling.isLeftChild()) {
-                            sibling.rightChild.colour = parent.colour;
+                        if (sibling.getLeft()) {
+                            sibling.right.colour = parent.colour;
                             turnLeft(sibling);
                             turnRight(parent);
                         } else {
-                            sibling.rightChild.colour = sibling.colour;
+                            sibling.right.colour = sibling.colour;
                             sibling.colour = parent.colour;
                             turnLeft(parent);
                         }
@@ -315,43 +317,43 @@ class RedBlackTree<T extends Comparable<T>> {
     }
 
     private void deleteStep(Node del) {
-        if (del == null) {
+        if (del == leafNode) {
             return;
         }
 
         Node rep = replaceBST(del);
 
-        if (rep == null) {
+        if (rep == leafNode) {
             if (del == root) {
-                root = null;
+                root = leafNode;
             } else {
                 if (del.colour == Colour.BLACK) {
                     fixBLACK2(del);
                 } else {
-                    if (del.sibling() != null) {
+                    if (del.sibling() != leafNode) {
                         del.sibling().colour = Colour.RED;
                     }
                 }
 
-                if (del.isLeftChild()) {
-                    del.parent.leftChild = null;
+                if (del.getLeft()) {
+                    del.parent.left = leafNode;
                 } else {
-                    del.parent.rightChild = null;
+                    del.parent.right = leafNode;
                 }
             }
             return;
         }
 
-        if (del.leftChild == null || del.rightChild == null) {
+        if (del.left == leafNode || del.right == leafNode) {
             if (del == root) {
                 root = new Node(rep.key);
-                root.leftChild = root.rightChild = null;
+                root.left = root.right = leafNode;
                 root.colour = Colour.BLACK;
             } else {
-                if (del.isLeftChild()) {
-                    del.parent.leftChild = rep;
+                if (del.getLeft()) {
+                    del.parent.left = rep;
                 } else {
-                    del.parent.rightChild = rep;
+                    del.parent.right = rep;
                 }
                 rep.parent = del.parent;
                 if (rep.colour == Colour.BLACK && del.colour == Colour.BLACK) {
@@ -372,8 +374,12 @@ class RedBlackTree<T extends Comparable<T>> {
      * Complexity: O(log(n)) average and worst case
      * @param key data which will be deleted from the RBT
      */
-    public void delete(T key) {
+    public void remove(T key) {
         deleteStep(find(root, key));
+    }
+
+    public Node find(T key) {
+        return find(root, key);
     }
 
     /**
@@ -383,31 +389,31 @@ class RedBlackTree<T extends Comparable<T>> {
      * @param key data which will be found in the RBT
      * @return Node with the data = key
      */
-    public Node find(Node curRoot, T key) {
-        if(curRoot == null) {
+    private Node find(Node curRoot, T key) {
+        if(curRoot == leafNode) {
             throw new NullPointerException("Node is null");
         }
         if (key.compareTo(curRoot.key) == 0) {
             return curRoot;
         }
-        if (curRoot.leftChild != null && key.compareTo(curRoot.key) < 0) {
-            return find(curRoot.leftChild, key);
+        if (curRoot.left != leafNode && key.compareTo(curRoot.key) < 0) {
+            return find(curRoot.left, key);
         }
-        if (curRoot.rightChild != null && key.compareTo(curRoot.key) > 0) {
-            return find(curRoot.rightChild, key);
+        if (curRoot.right != leafNode && key.compareTo(curRoot.key) > 0) {
+            return find(curRoot.right, key);
         }
-        return null;
+        throw new NullPointerException("Node with key " + key + " is null");
     }
 
     // Find the lower predecessor of the node
     protected Node predBelow(Node node) {
-        if (node == null) {
+        if (node == leafNode) {
             throw new NullPointerException("Node is null");
         }
         Node temp = node;
 
-        while (temp.rightChild != null) {
-            temp = temp.rightChild;
+        while (temp.right != leafNode) {
+            temp = temp.right;
         }
 
         return temp;
@@ -420,16 +426,16 @@ class RedBlackTree<T extends Comparable<T>> {
      * @return predecessor of current node (inorder traversal)
      */
     public Node pred(Node node) {
-        if (node == null) {
+        if (node == leafNode) {
             throw new NullPointerException("Node is null");
         }
 
-        if (node.leftChild != null) {
-            return maxNode(node.leftChild);
+        if (node.left != leafNode) {
+            return maxNode(node.left);
         }
 
         Node parent = node.parent;
-        while (parent != null && node == parent.leftChild) {
+        while (parent != leafNode && node == parent.left) {
             node = parent;
             parent = parent.parent;
         }
@@ -439,13 +445,13 @@ class RedBlackTree<T extends Comparable<T>> {
 
     // Find maxNode to find predecessor (Going right and down while node exist)
     private Node maxNode(Node node) {
-        if (node == null) {
+        if (node == leafNode) {
             throw new NullPointerException("Node is null");
         }
         Node temp = node;
 
-        while (temp.rightChild != null) {
-            temp = temp.rightChild;
+        while (temp.right != leafNode) {
+            temp = temp.right;
         }
 
         return temp;
@@ -458,16 +464,16 @@ class RedBlackTree<T extends Comparable<T>> {
      * @return successor of current node (inorder traversal)
      */
     public Node succ(Node node) {
-        if (node == null) {
+        if (node == leafNode) {
             throw new NullPointerException("Node is null");
         }
 
-        if (node.rightChild != null) {
-            return minNode(node.rightChild);
+        if (node.right != leafNode) {
+            return minNode(node.right);
         }
 
         Node parent = node.parent;
-        while (parent != null && node == parent.rightChild) {
+        while (parent != leafNode && node == parent.right) {
             node = parent;
             parent = parent.parent;
         }
@@ -477,30 +483,30 @@ class RedBlackTree<T extends Comparable<T>> {
 
     // Find minNode to find successor (Going left and down while node exist)
     private Node minNode(Node node) {
-        if (node == null) {
+        if (node == leafNode) {
             throw new NullPointerException("Node is null");
         }
         Node temp = node;
 
-        while (temp.leftChild != null) {
-            temp = temp.leftChild;
+        while (temp.left != leafNode) {
+            temp = temp.left;
         }
 
         return temp;
     }
 
     private void printInorder(Node node) {
-        if (node == null) {
+        if (node == leafNode) {
             return;
         }
         /* first recur on left child */
-        printInorder(node.leftChild);
+        printInorder(node.left);
 
         /* then print the data of node */
         System.out.print(node.key);
 
         /* now recur on right child */
-        printInorder(node.rightChild);
+        printInorder(node.right);
     }
 
     /**
