@@ -8,6 +8,7 @@ Already refactored:
 ### Algorithms
 
 - All the basic sortings
+- Searchings (DFS, BFS, Binary Search)
 
 ### Data Structures
 
@@ -15,5 +16,5 @@ Already refactored:
 - Maps (Separate Chaining, Linear Probing, Double Hashing)
 - Based on MapADT DS (Dictionary, LinkedHashMap, SkipList, TreeMap, Trie)
 - Graphs (all types)
-- Heaps (Binary, Binomial, D, Leftist, Pairing, SKew, Ternary)
+- Heaps (Binary, Binomial, D, Leftist, Pairing, Skew, Ternary)
 - Trees (AVL, Red-Black)
