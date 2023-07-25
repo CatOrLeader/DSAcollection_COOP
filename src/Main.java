@@ -27,9 +27,9 @@ public class Main {
         System.out.println();
 
         IntArrayStructure arrayStructure = new IntArrayStructure();
-        arrayStructure.generateRandom(20000, -100, 100);
+        arrayStructure.generateRandom(2000, -100, 100);
 
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 9; i++) {
             integerArrays.add(
                     new IntArray(
                             arrayStructure.currentArray()
@@ -40,6 +40,7 @@ public class Main {
         ArraySortCompare<Integer> intArrayCompare = new ArraySortCompare<>(integerArrays);
 
         intArrayCompare.compareAndReport();
+        integerArrays.clear();
 
         System.out.println();
         System.out.println("=================================");
@@ -50,7 +51,7 @@ public class Main {
         arrayStructure = new IntArrayStructure();
         arrayStructure.generateWithRepetitions(20000, -100, 100);
 
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 9; i++) {
             integerArrays.add(
                     new IntArray(
                             arrayStructure.currentArray()
@@ -59,8 +60,9 @@ public class Main {
         }
 
         intArrayCompare = new ArraySortCompare<>(integerArrays);
-
         intArrayCompare.compareAndReport();
+        integerArrays.clear();
+
         System.out.println();
         System.out.println("=================================");
         System.out.println("ARRAYS WITHOUT REPETITIONS");
@@ -70,7 +72,7 @@ public class Main {
         arrayStructure = new IntArrayStructure();
         arrayStructure.generateWithoutRepetitions(20000, -1000000000, 1000000000);
 
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 9; i++) {
             integerArrays.add(
                     new IntArray(
                             arrayStructure.currentArray()
@@ -81,17 +83,18 @@ public class Main {
         intArrayCompare = new ArraySortCompare<>(integerArrays);
 
         intArrayCompare.compareAndReport();
+        integerArrays.clear();
 
         System.out.println();
         System.out.println("=================================");
-        System.out.println("SORTED ARRAYS REPETITIONS");
+        System.out.println("SORTED ARRAYS");
         System.out.println("=================================");
         System.out.println();
 
         arrayStructure = new IntArrayStructure();
         arrayStructure.generateSorted(20000, -100, 100);
 
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 9; i++) {
             integerArrays.add(
                     new IntArray(
                             arrayStructure.currentArray()
@@ -102,17 +105,18 @@ public class Main {
         intArrayCompare = new ArraySortCompare<>(integerArrays);
 
         intArrayCompare.compareAndReport();
+        integerArrays.clear();
 
         System.out.println();
         System.out.println("=================================");
-        System.out.println("REVERSED ARRAYS REPETITIONS");
+        System.out.println("REVERSED ARRAYS");
         System.out.println("=================================");
         System.out.println();
 
         arrayStructure = new IntArrayStructure();
         arrayStructure.generateReversed(20000, -100, 100);
 
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 9; i++) {
             integerArrays.add(
                     new IntArray(
                             arrayStructure.currentArray()
@@ -123,6 +127,7 @@ public class Main {
         intArrayCompare = new ArraySortCompare<>(integerArrays);
 
         intArrayCompare.compareAndReport();
+        integerArrays.clear();
 
         System.out.println();
         System.out.println("=================================");
