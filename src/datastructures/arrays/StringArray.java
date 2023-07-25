@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
-public class StringArray implements IArray<String>, Iterable<String> {
+public final class StringArray implements IArray<String>, Iterable<String> {
     private final ArrayList<String> array;
 
     public StringArray() {

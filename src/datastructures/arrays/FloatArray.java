@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
-public class FloatArray implements IArray<Float>, Iterable<Float> {
+public final class FloatArray implements IArray<Float>, Iterable<Float> {
     private final ArrayList<Float> array;
 
     public FloatArray() {

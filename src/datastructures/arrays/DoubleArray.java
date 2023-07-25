@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
-public class DoubleArray implements IArray<Double>, Iterable<Double> {
+public final class DoubleArray implements IArray<Double>, Iterable<Double> {
     private final ArrayList<Double> array;
 
     public DoubleArray() {

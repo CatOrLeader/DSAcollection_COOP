@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
-public class FloatArrayStructure {
+public final class FloatArrayStructure {
     private ArrayList<Float> array;
 
     public FloatArrayStructure() {

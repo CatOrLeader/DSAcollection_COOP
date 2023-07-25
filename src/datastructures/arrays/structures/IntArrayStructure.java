@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
-public class IntArrayStructure {
+public final class IntArrayStructure {
     private ArrayList<Integer> array;
 
     public IntArrayStructure() {

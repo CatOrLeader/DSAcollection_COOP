@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
-public class CharArray implements IArray<Character>, Iterable<Character> {
+public final class CharArray implements IArray<Character>, Iterable<Character> {
     private ArrayList<Character> array;
 
     public CharArray() {

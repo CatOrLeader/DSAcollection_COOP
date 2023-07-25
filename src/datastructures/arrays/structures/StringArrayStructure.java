@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
-public class StringArrayStructure {
+public final class StringArrayStructure {
     private ArrayList<String> array;
 
     public StringArrayStructure() {
