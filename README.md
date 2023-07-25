@@ -18,3 +18,4 @@ Already refactored:
 - Graphs (all types)
 - Heaps (Binary, Binomial, D, Leftist, Pairing, Skew, Ternary)
 - Trees (AVL, Red-Black)
+- Queues (Linear, Circular, Priority)
