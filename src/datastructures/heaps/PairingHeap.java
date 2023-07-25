@@ -5,7 +5,7 @@ import datastructures.arrays.IArray;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class PairingHeap<T extends Comparable<T>> implements Heap<T> {
+public final class PairingHeap<T extends Comparable<T>> implements Heap<T> {
 
     private Node root;
     private int size;

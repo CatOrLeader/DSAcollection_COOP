@@ -2,7 +2,7 @@ package datastructures.heaps;
 
 import datastructures.arrays.IArray;
 
-public class SkewHeap<T extends Comparable<T>> implements Heap<T> {
+public final class SkewHeap<T extends Comparable<T>> implements Heap<T> {
 
     private Node root;
     private int size;

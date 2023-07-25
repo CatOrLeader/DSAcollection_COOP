@@ -4,7 +4,7 @@ package datastructures.maps;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LinkedHashMap<K, V> implements MapADT<K, V> {
+public final class LinkedHashMap<K, V> implements MapADT<K, V> {
     private LinkedHashMapNode head;
     private LinkedHashMapNode tail;
     private MapADT<K, LinkedHashMapNode> map;

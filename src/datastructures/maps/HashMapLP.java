@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * @param <K> - object which will be treated as the key in HashMap.
  * @param <V> - object which will be treated as the value in HashMap.
  */
-public class HashMapLP<K, V> implements MapADT<K, V> {
+public final class HashMapLP<K, V> implements MapADT<K, V> {
     private final int maxHashtableSize = 100;
     private int size;
     private KeyValuePair<K, V>[] hashMap;

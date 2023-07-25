@@ -1,6 +1,6 @@
 package datastructures.maps;
 
-public class KeyValuePair<K, V> {
+public final class KeyValuePair<K, V> {
     public K key;
     public V value;
 

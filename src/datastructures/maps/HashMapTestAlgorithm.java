@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class HashMapTestAlgorithm<K, V> implements MapAlgorithm<K, V> {
+public final class HashMapTestAlgorithm<K, V> implements MapAlgorithm<K, V> {
     @Override
     public void implement(MapADT<K, V> map) {
         System.out.println();

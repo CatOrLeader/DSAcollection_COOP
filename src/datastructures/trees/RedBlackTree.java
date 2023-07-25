@@ -12,7 +12,7 @@ import java.util.Objects;
  * 5) For each node: is the same number of black nodes
  * @param <T>
  */
-public class RedBlackTree<T extends Comparable<T>> {
+public final class RedBlackTree<T extends Comparable<T>> {
     /**
      * The root of the RBT
      */

@@ -6,7 +6,7 @@ import datastructures.arrays.IntArray;
 
 import java.util.ArrayList;
 
-public class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
+public final class GraphArray<N, E extends Comparable<E>> implements GraphADT<N, E> {
     // Constants
     private static final String incorrectIndex = "Incorrect index";
     private static final String srcNodeAbsent = "Source node is absent in the graph";

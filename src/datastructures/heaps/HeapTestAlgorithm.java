@@ -1,6 +1,6 @@
 package datastructures.heaps;
 
-public class HeapTestAlgorithm<T extends Comparable<T>> implements HeapAlgorithm<T>{
+public final class HeapTestAlgorithm<T extends Comparable<T>> implements HeapAlgorithm<T>{
     @Override
     public void implement(Heap<T> heap) {
         System.out.println();

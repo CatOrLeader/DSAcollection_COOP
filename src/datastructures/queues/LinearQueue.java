@@ -2,7 +2,7 @@ package datastructures.queues;
 
 import java.util.Arrays;
 
-public class LinearQueue<E> implements QueueADT<E> {
+public final class LinearQueue<E> implements QueueADT<E> {
     private static final int DEFAULT_CAPACITY = 10;
     private Object[] elements;
     private int front;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
+public final class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
     private Node root;
     private int size;
     private final Node emptyPair;

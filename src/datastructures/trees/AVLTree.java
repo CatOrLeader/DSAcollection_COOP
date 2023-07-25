@@ -1,6 +1,6 @@
 package datastructures.trees;
 
-public class AVLTree<T extends Comparable<T>> {
+public final class AVLTree<T extends Comparable<T>> {
     private Node root;
     private final Node leafNode;
 

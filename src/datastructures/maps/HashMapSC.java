@@ -3,7 +3,7 @@ package datastructures.maps;
 import java.util.LinkedList;
 import java.util.List;
 
-public class HashMapSC<K, V> implements MapADT<K, V> {
+public final class HashMapSC<K, V> implements MapADT<K, V> {
     private int mapSize;
     private int capacity;
     private List<KeyValuePair<K, V>>[] hashTable;

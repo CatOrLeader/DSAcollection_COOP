@@ -2,7 +2,7 @@ package datastructures.heaps;
 
 import datastructures.arrays.IArray;
 
-public class LeftistHeap<T extends Comparable<T>> implements Heap<T> {
+public final class LeftistHeap<T extends Comparable<T>> implements Heap<T> {
 
     private Node root;
     private int size;

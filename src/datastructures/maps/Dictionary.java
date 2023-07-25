@@ -3,7 +3,7 @@ package datastructures.maps;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Dictionary<K, V> implements MapADT<K, V> {
+public final class Dictionary<K, V> implements MapADT<K, V> {
     private MapADT<K, V> map;
 
     public Dictionary(MapADT<K, V> map) {

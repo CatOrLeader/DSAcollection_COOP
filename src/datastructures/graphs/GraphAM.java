@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @param <N> the type of the node key in the graph
  * @param <E> the type of value stored in the particular node
  */
-public class GraphAM<N, E extends Comparable<E>> implements GraphADT<N, E> {
+public final class GraphAM<N, E extends Comparable<E>> implements GraphADT<N, E> {
     // Constants
     private static final String incorrectIndex = "Incorrect index";
     private static final String srcNodeAbsent = "Source node is absent in the graph";

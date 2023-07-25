@@ -3,7 +3,7 @@ package datastructures.queues;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public class PriorityQueue<E extends Comparable<E>> implements QueueADT<E> {
+public final class PriorityQueue<E extends Comparable<E>> implements QueueADT<E> {
     private static final int DEFAULT_CAPACITY = 10;
     private Object[] elements;
     private int size;

@@ -5,7 +5,7 @@ import datastructures.arrays.IArray;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DHeap<T extends Comparable<T>> implements Heap<T> {
+public final class DHeap<T extends Comparable<T>> implements Heap<T> {
 
     private List<T> heap;
     private int d;

@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
  * @param <K> - object which will be treated as key in HashMap.
  * @param <V> - object which will be treated as value in HashMap.
  */
-public class HashMapDH<K, V> implements MapADT<K, V> {
+public final class HashMapDH<K, V> implements MapADT<K, V> {
     /**
      * Minimal prime number for any HashMap.
      * <p>

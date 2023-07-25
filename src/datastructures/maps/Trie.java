@@ -4,7 +4,7 @@ package datastructures.maps;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Trie implements MapADT<String, Integer> {
+public final class Trie implements MapADT<String, Integer> {
     private TrieNode root;
     private final TrieNode emptyNode;
 

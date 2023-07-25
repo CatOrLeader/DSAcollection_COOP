@@ -5,7 +5,7 @@ import datastructures.arrays.IArray;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BinomialHeap<T extends Comparable<T>> implements Heap<T> {
+public final class BinomialHeap<T extends Comparable<T>> implements Heap<T> {
 
     private ArrayList<BinomialTree<T>> trees;
     private final T minValue;
