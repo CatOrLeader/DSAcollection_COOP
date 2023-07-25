@@ -130,7 +130,7 @@ public class Trie implements MapADT<String, Integer> {
 
     @Override
     public void print() {
-        System.out.println("Dictionary:");
+        System.out.println("Trie:");
         for (KeyValuePair<String, Integer> pair: entrySet()) {
             System.out.println(pair.key + " : " + pair.value);
         }

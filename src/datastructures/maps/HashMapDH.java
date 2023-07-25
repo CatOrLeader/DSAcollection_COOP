@@ -1,5 +1,8 @@
 package datastructures.maps;
 
+import datastructures.EmptyObject;
+import datastructures.arrays.IArray;
+
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
@@ -41,6 +44,18 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
         }
     }
 
+    public HashMapDH(IArray keys, IArray entries) {
+        size = maxHashtableSize;
+        closestLowerPrime = closestLowerPrime(size);
+        emptyPair = new KeyValuePair<>(null, null);
+        hashMap = new KeyValuePair[size];
+        for (int i = 0; i < size; ++i) {
+            hashMap[i] = emptyPair;
+        }
+
+        putAll(keys, entries);
+    }
+
     /**
      * Get the current size of the HashTable.
      *
@@ -79,7 +94,7 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
             int currentIndex = (startingIndex + i * hashStep) % size();
 
             if (hashMap[currentIndex] == emptyPair) {
-                throw new NoSuchElementException("No value with such key");
+                return (V) new EmptyObject();
             }
 
             if (hashMap[currentIndex].key.equals(key)) {
@@ -123,6 +138,15 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
         }
     }
 
+    public void putAll(IArray keys, IArray entries) {
+        for (int i = 0; i < keys.size(); i++) {
+            KeyValuePair<K, V> current = new KeyValuePair<>(
+                    (K) keys.valueByIndex(i),
+                    (V) entries.valueByIndex(i));
+            put(current.key, current.value);
+        }
+    }
+
     @Override
     public void remove(K key) {
         int startingIndex = startIndexWithHashing(key);
@@ -136,6 +160,7 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
             }
 
             if (hashMap[currentIndex].key.equals(key)) {
+                System.out.println("Removed successfully");
                 hashMap[currentIndex] = emptyPair;
                 return;
             }
@@ -257,7 +282,7 @@ public class HashMapDH<K, V> implements MapADT<K, V> {
 
     @Override
     public void print() {
-        System.out.println("Dictionary:");
+        System.out.println("Hasp Map DH:");
         for (KeyValuePair<K, V> pair: entrySet()) {
             System.out.println(pair.key + " : " + pair.value);
         }

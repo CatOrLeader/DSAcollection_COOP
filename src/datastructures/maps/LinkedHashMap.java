@@ -124,7 +124,7 @@ public class LinkedHashMap<K, V> implements MapADT<K, V> {
 
     @Override
     public void print() {
-        System.out.println("Dictionary:");
+        System.out.println("Linked Hash Map:");
         for (KeyValuePair<K, V> pair: entrySet()) {
             System.out.println(pair.key + " : " + pair.value);
         }

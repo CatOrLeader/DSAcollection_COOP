@@ -242,7 +242,7 @@ public class TreeMap<K extends Comparable<K>, V> implements MapADT<K, V> {
 
     @Override
     public void print() {
-        System.out.println("Dictionary:");
+        System.out.println("Tree Map:");
         for (KeyValuePair<K, V> pair: entrySet()) {
             System.out.println(pair.key + " : " + pair.value);
         }

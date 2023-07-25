@@ -182,7 +182,7 @@ public class HashMapLP<K, V> implements MapADT<K, V> {
 
     @Override
     public void print() {
-        System.out.println("Dictionary:");
+        System.out.println("Hash Map LP:");
         for (KeyValuePair<K, V> pair: entrySet()) {
             System.out.println(pair.key + " : " + pair.value);
         }

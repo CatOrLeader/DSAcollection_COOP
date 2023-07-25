@@ -110,6 +110,21 @@ public class StringArray implements IArray<String>, Iterable<String> {
         }
     }
 
+    public StringArray inputFromConsoleChain() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of elements in the array: ");
+        int size = scanner.nextInt();
+
+        System.out.println("Enter the elements of the array:");
+        for (int i = 0; i < size; i++) {
+            System.out.print("Element at index " + i + ": ");
+            String element = scanner.next();
+            array.add(element);
+        }
+
+        return this;
+    }
+
     @Override
     public int size() {
         return array.size();
